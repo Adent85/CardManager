@@ -1,0 +1,26 @@
+/*
+Copyright Jan 28, 2022 Kyle Fisk
+*/
+/* 
+    Created on : Jan 28, 2022, 12:09:38 PM
+    Author     : Kyle Fisk 
+    https://mdbootstrap.com/
+    https://icons.getbootstrap.com/#usage
+*/
+button#loginButton{
+    margin-right: 2%!important;
+}
+a.navbar-brand.me-2{
+    margin-left: 2%!important;
+}
+div.logoutButton{
+    margin-right: 2%!important;
+}
+p.footerP{
+    margin-top: 1em;
+    padding-right: .5em;
+}
+img.d-block {
+    padding-left: 30%;
+    padding-top: 5%;
+}
