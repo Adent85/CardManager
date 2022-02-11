@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/user_manager/login.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/user_manager/index.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/index.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/view/header.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/user_manager/register.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/user_manager/user_home.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager/view/footer.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager/Cloned-Repo/CardManager/index.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager/Cloned-Repo/CardManager/model/card_db.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager/Cloned-Repo/CardManager/model/card.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager/Cloned-Repo/CardManager/model/user.php</file>
         </group>
     </open-files>
 </project-private>
