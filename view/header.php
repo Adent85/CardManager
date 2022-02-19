@@ -46,6 +46,9 @@
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="card_manager/?controllerRequest=show_card_list">Card List</a>
+                    </li>
                       <?php } ?>               
                   </ul>
                   <!-- Left links -->

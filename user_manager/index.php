@@ -9,6 +9,7 @@ require_once '../model/user_db.php';
 require_once '../model/database.php';
 require_once '../model/user.php';
 require_once '../model/utility.php';
+require_once '../model/card_db.php';
 
 $lifetime = 60 * 60 * 24 * 14;
 session_set_cookie_params($lifetime, '/');
@@ -46,12 +47,10 @@ if ($controllerChoice=='show_home_page') {
     $_SESSION['user'] = $user;
     $userName= $user->getFirstName()." ".$user->getLastName();
     include 'user_home.php';
-    }
-    
+    } 
 }elseif ($controllerChoice=='user_login') {
     $email=filter_input(INPUT_POST, 'inputEmail', FILTER_VALIDATE_EMAIL);
-    $password=filter_input(INPUT_POST, 'inputPassword');
-    
+    $password=filter_input(INPUT_POST, 'inputPassword');  
     $user=user_db::userLogin($email,$password);
     $_SESSION['user'] = $user;
     $userName= $user->getFirstName()." ".$user->getLastName();
@@ -72,4 +71,6 @@ if ($controllerChoice=='show_home_page') {
     require_once '../index.php';
 }elseif ($controllerChoice=='user_home') {
     require_once 'user_home.php';
+}elseif($controllerChoice=='show_all_cards'){
+    
 }
