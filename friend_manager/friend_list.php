@@ -22,7 +22,7 @@ Copyright Mar 26, 2022 Kyle Fisk
                     <tr>
                         <th scope="row"><?php echo $friend->getID();?></th>
                         <td><?php echo $friend->getFirstName()." ".$friend->getLastName();?></td>
-                        <td><form action="friend_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_friend"><input type="hidden" name="friend_id" value='<?php echo $friend->getID();?>'>
+                        <td><form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_decks_for_trade"><input type="hidden" name="friend_id" value='<?php echo $friend->getID();?>'>
                             <button type="submit" class="btn btn-primary">View <?php echo $friend->getFirstName()?>'s Decks</button></form></td>
                         <td><button type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#deleteFriendModal<?php echo $friend->getID();?>">Remove Friend</button><div class="modal fade" id="deleteFriendModal<?php echo $friend->getID();?>" tabindex="-1" aria-labelledby="deleteFriendModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
