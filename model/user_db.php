@@ -17,25 +17,27 @@ class user_db {
         $queryUser = 'SELECT * FROM user
                       WHERE email = :email
                       AND password = :password';
-        $statement = $db->prepare($queryUser);
-        $statement->bindValue(':email', $email);
-        $statement->bindValue(':password', $password);
-        $statement->execute();
-        $row = $statement->fetch();
-        $statement->closeCursor();
-        if($row==false){
-            $user = false;
+        try{
+            $statement = $db->prepare($queryUser);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':password', $password);
+            $statement->execute();
+            $row = $statement->fetch();
+            if($row==false){
+                $user = false;
+                return $user;
+            }else{
+            $user = new User($row['firstName'], 
+                             $row['lastName'], 
+                             $row['email'],                           
+                             $row['password'], 
+                             $row['userRoleID'],
+                             $row['active']);
+            $user->setID($row['ID']);
             return $user;
-        }else{
-        $user = new User($row['firstName'], 
-                         $row['lastName'], 
-                         $row['email'],                           
-                         $row['password'], 
-                         $row['userRoleID'],
-                         $row['active']);
-        $user->setID($row['ID']);
-//        $user->getActiveString();
-        return $user;
+            }
+        }catch( PDOException $e){
+            Database::display_db_error($e->getMessage);
         }
     }
     
@@ -45,16 +47,200 @@ class user_db {
                  (firstName, lastName, email, password, userRoleID)
               VALUES
                  (:first_name, :last_name, :email, :password, :user_role_id)';
-
-        $statement = $db->prepare($query);
-        $statement->bindValue(':first_name', $user->getFirstName());
-        $statement->bindValue(':last_name', $user->getLastName());
-        $statement->bindValue(':email', $user->getEmail());
-        $statement->bindValue(':password', $user->getPassword());
-        $statement->bindValue(':user_role_id', $user->getUserRoleId());
-        $statement->execute();
-        $ID= $db->lastInsertId(); 
-        $statement->closeCursor();
-        return $ID;
+        try {
+            $statement = $db->prepare($query);
+            $statement->bindValue(':first_name', $user->getFirstName());
+            $statement->bindValue(':last_name', $user->getLastName());
+            $statement->bindValue(':email', $user->getEmail());
+            $statement->bindValue(':password', $user->getPassword());
+            $statement->bindValue(':user_role_id', $user->getUserRoleId());
+            $statement->execute();
+            $ID= $db->lastInsertId(); 
+            return $ID;
+        } catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+            
+        }
     }
+    
+    public static function getActiveUsers(){
+        $db = Database::getDB();
+        $queryUser = 'SELECT ID, firstName , lastName FROM user
+                      WHERE active = 1';
+        try{
+            $statement = $db->prepare($queryUser);
+            $statement->execute();
+
+            $users = array();
+
+            foreach ($statement as $row) {
+            $user = new User($row['ID'], 
+                             $row['firstName'], 
+                             $row['lastName']);
+            $users[]=$user;
+            }
+            return $users;
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage());
+        }
+    }
+    
+//    public static function getUserByID($friendID){
+//        $db = Database::getDB();
+//        $queryUser = 'SELECT * FROM user
+//                      WHERE ID = :friendID';
+//        $statement = $db->prepare($queryUser);
+//        $statement->bindValue(':friendID', $friendID);
+//        $statement->execute();
+//        try{
+//            foreach ($statement as $row) {
+//            $userFriend = new User($row['firstName'], 
+//                             $row['lastName'], 
+//                             $row['email'],                           
+//                             $row['password'], 
+//                             $row['userRoleID'],
+//                             $row['active']);
+//            $userFriend->setID($row['ID']);
+//            return $userFriend;
+//            }
+//        }catch (PDOException $e) {
+//            Datebase::display_db_error($e->getMessage);
+//        }
+//    }
+    public static function userFriends($userId){
+        $db = Database::getDB();
+        $queryFriendList = 'SELECT u.ID, u.firstName, u.lastName FROM user u 
+                            JOIN friend_list fl 
+                            ON u.ID = fl.user_1_id
+                            WHERE fl.user_2_id = :userId
+                            UNION
+                            SELECT u.ID, u.firstName, u.lastName FROM user u 
+                            JOIN friend_list fl 
+                            ON u.ID = fl.user_2_id
+                            WHERE fl.user_1_id = :userId';
+        try{
+            $statement = $db->prepare($queryFriendList);
+            $statement->bindValue(':userId', $userId);
+            $statement->execute();
+
+            $userFriends = array();
+
+            foreach ($statement as $row) {
+                $userFriends[] = new User($row['ID'],
+                             $row['firstName'], 
+                             $row['lastName']);   
+            }
+
+            return $userFriends;
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+        }
+    }
+    
+    public static function removeFriend($friendId, $userId) {
+        $db = Database::getDB();
+        $queryRemoveFriend = 'DELETE FROM friend_list
+                              WHERE user_1_id = :userId
+                              AND user_2_id = :friendId 
+                              OR user_1_id = :friendId
+                              AND user_2_id = :userId';
+        try{
+            $statement = $db->prepare($queryRemoveFriend);
+            $statement->bindValue(':userId', $userId);
+            $statement->bindValue(':friendId', $friendId);
+            $statement->execute();
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+        }
+    }
+
+    public static function sendFriendRequest($userId , $receiverId){
+        $db = Database::getDB();
+        $queryRequestFriend = 'INSERT INTO friend_request
+                               (sender_id, receiver_id, status)
+                               VALUES
+                               (:senderId, :receiverId, :status)';
+        try{
+            $statement = $db->prepare($queryRequestFriend);
+            $statement->bindValue(':senderId', $userId);
+            $statement->bindValue(':receiverId', $receiverId);
+            $statement->bindValue(':status', 1);
+            $statement->execute();
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+        }
+                
+    }
+    public static function getFriendRequests($userId){
+        $db = Database::getDB();
+        $queryFriendRequest = 'SELECT u.ID, u.firstName, u.lastName FROM friend_request fl
+                               JOIN user u
+                               ON u.ID = fl.sender_id
+                               WHERE receiver_id = :userId
+                               AND status = 1';
+        try{
+            $statement = $db->prepare($queryFriendRequest);
+            $statement->bindValue(':userId', $userId);
+            $statement->execute();
+
+            $friendRequests = array();
+
+            foreach ($statement as $row) {
+                $friendRequests[] = new User($row['ID'],
+                                   $row['firstName'], 
+                                   $row['lastName']);
+            }
+            return $friendRequests;
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+        }
+    }
+
+    public static function denyFriendRequest($userId, $senderId) {
+        $db = Database::getDB();
+        $queryDenyFriendRequest = 'UPDATE friend_request
+                                   SET status = 3
+                                   WHERE sender_id = :senderId
+                                   AND receiver_id = :userId';
+        try{
+            $statement = $db->prepare($queryDenyFriendRequest);
+            $statement->bindValue(':senderId', $senderId);
+            $statement->bindValue(':userId', $userId);
+            $statement->execute();
+        }catch (PDOException $e) {
+            Database::display_db_error($e->getMessage);
+        }  
+    }
+
+    public static function acceptFriendRequest($userId, $senderId) {
+        $db = Database::getDB();
+        $queryDenyFriendRequest = 'UPDATE friend_request
+                                   SET status = 2
+                                   WHERE sender_id = :senderId
+                                   AND receiver_id = :userId';
+        try{
+        $statement = $db->prepare($queryDenyFriendRequest);
+        $statement->bindValue(':senderId', $senderId);
+        $statement->bindValue(':userId', $userId);
+        $statement->execute();
+        $count = $statement->rowCount();
+        $statement->closeCursor();
+            if($count>0){
+                $queryAddFriend = 'INSERT INTO friend_list
+                                   (user_1_id, user_2_id)
+                                   VALUES
+                                   (:userId, :senderId)';
+
+                $statement2 = $db->prepare($queryAddFriend);
+                $statement2->bindValue(':userId', $userId);
+                $statement2->bindValue(':senderId', $senderId);
+                $statement2->execute();
+            }
+        }catch (PDOException $e_update_insert) {
+            Database::display_db_error($e_update_insert->getMessage);
+        }
+        
+    }
+    
+
 }

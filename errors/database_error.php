@@ -1,9 +1,11 @@
+<?php if (isset($_SESSION['user'])) {$user=$_SESSION['user'];$userName= $user->getFirstName()." ".$user->getLastName();} else {$userName='';}?>
+<?php require_once '../model/utility.php';?>
 <?php include '../view/header.php'; ?>
-<div id="main">
-    <h1>Database Error</h1>
-    <p class="first_paragraph">There was an error connecting to the database.</p>
-    <p>The database must be installed as described in the appendix.</p>
-    <p>MySQL must be running as described in chapter 1.</p>
-    <p class="last_paragraph">Error message: <?php echo $error_message; ?></p>
-</div><!-- end main -->
+<div class="card">    
+    <div class="text-center">
+        <h1>Database Error</h1>
+
+        <p>Error message: <?php echo $error_message; ?></p>
+    </div>
+</div>
 <?php include '../view/footer.php'; ?>

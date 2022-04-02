@@ -5,11 +5,11 @@ Copyright Jan 28, 2022 Kyle Fisk
 <?php require_once 'model/utility.php';?>
 <?php require_once 'view/header.php';?><br>
 <main style="height: 100vh;">
-    <div class="container border border-white rounded-pill bg-info bg-gradient text-center">
+    <div class="container border border-white rounded-pill text-center" style='background-color: #ADD8E6;'>
     <h1>Welcome!</h1>
     <p>Please log in to access your account or register a new account to start building your collection.</p>
     </div>
-    <div class="container-md .bg-dark.bg-gradient">
+    <div class="container-md ">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-mdb-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">

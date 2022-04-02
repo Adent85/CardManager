@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <base href="http://localhost/projects/CardManager/">
+        <base href="http://localhost/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/">
         <!-- Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
         <!-- Google Fonts -->
@@ -46,9 +46,6 @@
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="card_manager/?controllerRequest=show_card_list">Card List</a>
-                    </li>
                       <?php } ?>               
                   </ul>
                   <!-- Left links -->
@@ -66,13 +63,13 @@
                                 <form class="px-4 py-3" action="user_manager/index.php" method="post">
                                   <!-- Email input -->
                                   <div class="form-outline mb-4">
-                                    <input type="email" id="email" name= "inputEmail" class="form-control" required/>
+                                      <input type="email" id="email" name= "inputEmail" class="form-control" required value="a@a.com"/>
                                     <label class="form-label" for="email">Email address</label>
                                   </div>
 
                                   <!-- Password input -->
                                   <div class="form-outline mb-4">
-                                    <input type="password" id="password" name= "inputPassword" class="form-control" required/>
+                                      <input type="password" id="password" name= "inputPassword" class="form-control" required value="a"/>
                                     <label class="form-label" for="password">Password</label>
                                   </div>
 
@@ -163,7 +160,7 @@
               <!-- Container wrapper -->
             </nav>
         </header>
-    <body style="background-image: url('img/carbonFiber.jfif');">
+    <body style="background: linear-gradient(274deg, rgba(5,95,153,1) 42%, rgba(0,211,255,1) 100%);">
         <!-- Navbar -->
 
   

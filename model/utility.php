@@ -28,4 +28,12 @@ class utility {
        }
        return $userID;     
    }
+   public static function getDeckImage($deckTypeID) {
+       $deckImage = null;
+       
+       if($deckTypeID == 1){
+           $deckImage = "pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg_dah43cy-fullview";
+       }
+       return $deckImage;
+   }
 }

@@ -15,11 +15,11 @@ class deck {
     
     private $ID, $userID, $name, $description, $deckImage, $deckTypeID, $totalCards, $active;
     
-    public function __construct($ID, $userID, $name, $description, $deckTypeID, $totalCards, $active) {
-        $this->ID = $ID;
+    public function __construct($userID, $name, $description, $deckImage, $deckTypeID, $totalCards, $active) {
         $this->userID = $userID;
         $this->name = $name;
         $this->description = $description;
+        $this->deckImage = $deckImage;
         $this->deckTypeID = $deckTypeID;
         $this->totalCards = $totalCards;
         $this->active = $active;

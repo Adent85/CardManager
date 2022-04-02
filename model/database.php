@@ -20,5 +20,10 @@ class Database{
         }
         return self::$db;
     }
+    
+    public static function display_db_error($error_message){
+        include('../errors/database_error.php');
+        exit();
+    }
 }
 ?>

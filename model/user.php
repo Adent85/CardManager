@@ -15,7 +15,23 @@ class user {
     
     private $id, $firstName, $lastName, $email, $password, $userRoleId, $active;
     
-    public function __construct($firstName, $lastName, $email, $password, $userRoleId, $active) {
+    public function __construct()
+    {
+        $arguments = func_get_args();
+        $numberOfArguments = func_num_args();
+
+        if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+            call_user_func_array(array($this, $function), $arguments);
+        }
+    }
+    
+    public function __construct3($id, $firstName, $lastName) {
+        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+    }
+    
+    public function __construct6($firstName, $lastName, $email, $password, $userRoleId, $active) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
@@ -24,7 +40,7 @@ class user {
         $this->active = $active;
     }
     
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
@@ -52,7 +68,7 @@ class user {
         return $this->active;
     }
 
-    public function setId($id): void {
+    public function setID($id): void {
         $this->id = $id;
     }
 
@@ -79,8 +95,6 @@ class user {
     public function setActive($active): void {
         $this->active = $active;
     }
-
-
             
 }
 
