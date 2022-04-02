@@ -34,6 +34,6 @@ if ($controllerChoice == NULL) {
 if ($controllerChoice=='view_decks_for_trade') {
     $friendId = filter_input(INPUT_POST, 'friend_id');
     $friend_decks=deck_db::getUserDecks($friendId);
-    
+    $userFriend = user_db::getUserByID($friendId);
     require_once 'view_friend_deck_list.php';
 }

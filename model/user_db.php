@@ -37,7 +37,8 @@ class user_db {
             return $user;
             }
         }catch( PDOException $e){
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -58,7 +59,8 @@ class user_db {
             $ID= $db->lastInsertId(); 
             return $ID;
         } catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
             
         }
     }
@@ -81,32 +83,30 @@ class user_db {
             }
             return $users;
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage());
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
-//    public static function getUserByID($friendID){
-//        $db = Database::getDB();
-//        $queryUser = 'SELECT * FROM user
-//                      WHERE ID = :friendID';
-//        $statement = $db->prepare($queryUser);
-//        $statement->bindValue(':friendID', $friendID);
-//        $statement->execute();
-//        try{
-//            foreach ($statement as $row) {
-//            $userFriend = new User($row['firstName'], 
-//                             $row['lastName'], 
-//                             $row['email'],                           
-//                             $row['password'], 
-//                             $row['userRoleID'],
-//                             $row['active']);
-//            $userFriend->setID($row['ID']);
-//            return $userFriend;
-//            }
-//        }catch (PDOException $e) {
-//            Datebase::display_db_error($e->getMessage);
-//        }
-//    }
+    public static function getUserByID($friendID){
+        $db = Database::getDB();
+        $queryUser = 'SELECT ID, firstName, lastName FROM user
+                      WHERE ID = :friendID';
+        try{
+            $statement = $db->prepare($queryUser);
+            $statement->bindValue(':friendID', $friendID);
+            $statement->execute();
+            $row = $statement->fetch();
+            
+                $userFriend = new User($row['ID'],
+                                 $row['firstName'], 
+                                 $row['lastName']);
+                return $userFriend;
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
     public static function userFriends($userId){
         $db = Database::getDB();
         $queryFriendList = 'SELECT u.ID, u.firstName, u.lastName FROM user u 
@@ -133,7 +133,8 @@ class user_db {
 
             return $userFriends;
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -150,7 +151,8 @@ class user_db {
             $statement->bindValue(':friendId', $friendId);
             $statement->execute();
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
 
@@ -167,7 +169,8 @@ class user_db {
             $statement->bindValue(':status', 1);
             $statement->execute();
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
                 
     }
@@ -192,7 +195,8 @@ class user_db {
             }
             return $friendRequests;
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
 
@@ -208,7 +212,8 @@ class user_db {
             $statement->bindValue(':userId', $userId);
             $statement->execute();
         }catch (PDOException $e) {
-            Database::display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }  
     }
 
@@ -237,7 +242,8 @@ class user_db {
                 $statement2->execute();
             }
         }catch (PDOException $e_update_insert) {
-            Database::display_db_error($e_update_insert->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
         
     }

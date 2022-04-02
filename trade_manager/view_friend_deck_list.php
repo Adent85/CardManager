@@ -6,7 +6,7 @@ Copyright Apr 2, 2022 Kyle Fisk
 <?php require_once '../view/header.php';?><br>
 <main class="container" style="height: 100vh;">
     <div class="card" style='background-color: #ADD8E6;'>
-        <h1 class = "text-center"><?php echo $user->getFirstName();?>'s List of Decks</h1>
+        <h1 class = "text-center"><?php echo $userFriend->getFirstName();?>'s List of Decks</h1>
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered border-dark">
               <thead>
