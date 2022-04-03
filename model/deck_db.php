@@ -201,8 +201,19 @@ class deck_db {
     
     public static function getCardByCardId($cardID){
         $db = Database::getDB();
-        $query_get_card = 'SELECT * FROM card
-                           WHERE ID = :cardID';
+        $query_get_card = 'SELECT c.ID, c.name, c.description, c.deckTypeID FROM card c
+                           WHERE c.ID = :cardID
+                           UNION
+                           SELECT ca.ID as attribute1, ca.ID as attribute2, 
+                           ca.ID as attribute3, ca.ID as attribute4,
+                           ca.ID as attribute5 FROM card_attribute ca
+                           JOIN card c 
+                           ON ca.ID = c.attributeID
+                           AND ca.ID = c.attributeID2
+                           AND ca.ID = c.attributeID3
+                           AND ca.ID = c.attributeID4
+                           AND ca.ID = c.attributeID5';
+                           
         try{
             $statement = $db->prepare($query_get_card);
             $statement->bindValue(':cardID', $cardID);
@@ -214,11 +225,11 @@ class deck_db {
                                       $row['name'],
                                       $row['description'],
                                       $row['deckTypeID'],
-                                      $row['attributeID'],
-                                      $row['attributeID2'],
-                                      $row['attributeID3'],
-                                      $row['attributeID4'],
-                                      $row['attributeID5'],
+                                      $row['attribute1'],
+                                      $row['attribute2'],
+                                      $row['attribute3'],
+                                      $row['attribute4'],
+                                      $row['attribute5'],
                                       $row['cardPicture'],
                                       $row['active']);
             }
@@ -277,5 +288,18 @@ class deck_db {
         }catch (PDOException $e) {
             display_db_error($e->getMessage);
         }
+    }
+    
+        
+    public static function getCardAttributes($cards){
+        $db = Database::getDB();
+        $query_get_card_attributes = 'SELECT * FROM card_attribute ca
+                                      WHERE ca.ID = :attribute1
+                                      OR ca.ID = :attribute2
+                                      OR ca.ID = :attribute3
+                                      OR ca.ID = :attribute4
+                                      OR ca.ID = :attribute5';
+        
+        
     }
 }

@@ -11,7 +11,9 @@ Copyright Apr 2, 2022 Kyle Fisk
         <div class="card align-items-center" style='background-color: #ADD8E6;'>
             <div class="col-md-4">
                 <br>
-                <img src="<?php echo $friend_card->getCardPicture();?>" class="card-img-top img-fluid img-thumbnail" alt="<?php echo $friend_card->getName();?>"/>
+                <img src="<?php echo $friend_card->getCardPicture();?>" class="card-img-top img-fluid img-thumbnail" alt="<?php echo $friend_card->getName();?>" title="Card Attributes" data-mdb-toggle="popover" data-mdb-trigger="hover" data-mdb-html="true" 
+                     data-mdb-content="<?php if($friend_card->getAttributeId()!=null){echo $friend_card->getAttributeId();}?><br /><?php if($friend_card->getAttributeId2()!=null){echo $friend_card->getAttributeId2();}?><br /><?php if($friend_card->getAttributeId3()!=null){echo $friend_card->getAttributeId3();}?>
+                     <br /><?php if($friend_card->getAttributeId4()!=null){echo $friend_card->getAttributeId4();}?><br /><?php if($friend_card->getAttributeId5()!=null){echo $friend_card->getAttributeId5();}?>"/>
             </div>
             <div class="card-body">
                 <h5 class="card-title text-center"><?php echo $friend_card->getName();?></h5>
