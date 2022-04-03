@@ -13,7 +13,7 @@
  */
 class card {
     
-    private $id, $name, $description, $deckTypeID, $attributeId, $attributeId2, $attributeId3, $attributeId4, $attributeId5, $cardPicture, $active;
+    private $id, $name, $description, $deckTypeID, $attributeId, $attributeId2, $attributeId3, $attributeId4, $attributeId5, $cardPicture, $active, $attribute1, $attribute2, $attribute3, $attribute4, $attribute5;
     
     public function __construct($id, $name, $description, $deckTypeID, $attributeId, $attributeId2, $attributeId3, $attributeId4, $attributeId5, $cardPicture, $active) {
         $this->id = $id;
@@ -75,7 +75,27 @@ class card {
         return $this->active;
     }
 
-    public function setId($id): void {
+    public function getAttribute1() {
+        return $this->attribute1;
+    }
+
+    public function getAttribute2() {
+        return $this->attribute2;
+    }
+
+    public function getAttribute3() {
+        return $this->attribute3;
+    }
+
+    public function getAttribute4() {
+        return $this->attribute4;
+    }
+
+    public function getAttribute5() {
+        return $this->attribute5;
+    }
+
+        public function setId($id): void {
         $this->id = $id;
     }
 
@@ -118,6 +138,27 @@ class card {
     public function setActive($active): void {
         $this->active = $active;
     }
+
+    public function setAttribute1($attribute1): void {
+        $this->attribute1 = $attribute1;
+    }
+
+    public function setAttribute2($attribute2): void {
+        $this->attribute2 = $attribute2;
+    }
+
+    public function setAttribute3($attribute3): void {
+        $this->attribute3 = $attribute3;
+    }
+
+    public function setAttribute4($attribute4): void {
+        $this->attribute4 = $attribute4;
+    }
+
+    public function setAttribute5($attribute5): void {
+        $this->attribute5 = $attribute5;
+    }
+
 
 
 }

@@ -258,7 +258,7 @@ class deck_db {
         $db = Database::getDB();
         $query_get_cards = 'SELECT c.ID, c.name, c.description, c.deckTypeID, 
                             c.attributeID, c.attributeID2,c.attributeID3,
-                            c.attributeID4,c.attributeID5, cardPicture, active 
+                            c.attributeID4,c.attributeID5, c.cardPicture, c.active 
                             FROM deck_card dc
                             JOIN card c 
                             ON c.ID = dc.cardID
