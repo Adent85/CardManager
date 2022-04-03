@@ -15,7 +15,7 @@ class user {
     
     private $id, $firstName, $lastName, $email, $password, $userRoleId, $active;
     
-    public function __construct()
+    public function __construct()// this function controls the flow of the code by calling for the correct constructor based on the number of arguments passed into the class
     {
         $arguments = func_get_args();
         $numberOfArguments = func_num_args();

@@ -4,7 +4,7 @@ Copyright Mar 12, 2022 Kyle Fisk
 
 -->
 <?php require_once '../view/header.php';?><br>
-<main class="container" style="height: 100vh;">
+<main class="container" style="height: 100%;">
     <h1 class = "text-center">Add card to <?php echo $deck->getName();?></h1>
     <?php foreach ($cards as $card) : ?>
     <div>

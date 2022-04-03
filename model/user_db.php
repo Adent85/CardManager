@@ -12,7 +12,7 @@
  * @author Kyle Fisk 
  */
 class user_db {
-    public static function userLogin($email,$password){
+    public static function userLogin($email,$password){//verifys user login information
         $db = Database::getDB();
         $queryUser = 'SELECT * FROM user
                       WHERE email = :email
@@ -42,7 +42,7 @@ class user_db {
         }
     }
     
-    public static function insertUserData($user){
+    public static function insertUserData($user){//inserts new user 
         $db = Database::getDB();
         $query = 'INSERT INTO user
                  (firstName, lastName, email, password, userRoleID)
@@ -241,7 +241,7 @@ class user_db {
                 $statement2->bindValue(':senderId', $senderId);
                 $statement2->execute();
             }
-        }catch (PDOException $e_update_insert) {
+        }catch (PDOException $e) {
             $error_message = $e->getMessage();
             Database::display_db_error($error_message);
         }

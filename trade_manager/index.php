@@ -36,4 +36,9 @@ if ($controllerChoice=='view_decks_for_trade') {
     $friend_decks=deck_db::getUserDecks($friendId);
     $userFriend = user_db::getUserByID($friendId);
     require_once 'view_friend_deck_list.php';
+}elseif ($controllerChoice=='view_friend_deck') {
+    $friend_deck_id = filter_input(INPUT_POST, 'friend_deck_id');
+    $friend_deck=deck_db::getDeck($friend_deck_id);
+    $friend_cards=deck_db::getCardsInDeck($friend_deck_id);
+    include 'view_friend_deck.php';
 }

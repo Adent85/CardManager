@@ -25,8 +25,8 @@ Copyright Apr 2, 2022 Kyle Fisk
                   <td><?php echo $friend_deck->getName();?></td>
                   <td><?php echo $friend_deck->getDescription();?></td>
                   <td><?php echo $friend_deck->getTotalCards();?></td>
-                  <td><form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_deck">
-                    <input type="hidden" name="deck_id" value='<?php echo $friend_deck->getID();?>'><button type="submit" class="btn btn-primary">View Cards</button></form></td>
+                  <td><form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_friend_deck">
+                    <input type="hidden" name="friend_deck_id" value='<?php echo $friend_deck->getID();?>'><button type="submit" class="btn btn-primary">View Cards</button></form></td>
                 <?php endforeach; ?>
                 </tr>
               </tbody>
