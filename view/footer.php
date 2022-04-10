@@ -1,5 +1,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
-    <script src="/js/style.js"></script>
+    <script src="js/style.js"></script>
     </body>
     <footer class="navbar bg-dark text-white h-100" style="justify-content: center;">
           <!-- Copyright -->

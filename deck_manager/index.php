@@ -2,6 +2,7 @@
 require_once '../model/database.php';
 require_once '../model/utility.php';
 require_once '../model/card_db.php';
+require_once '../model/card_attribute.php';
 require_once '../model/user_db.php';
 require_once '../model/user.php';
 require_once '../model/deck.php';

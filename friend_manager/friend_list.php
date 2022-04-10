@@ -4,7 +4,7 @@ Copyright Mar 26, 2022 Kyle Fisk
 
 -->
 <?php require_once '../view/header.php';?><br>
-<main class="container" style="height: 100%;">
+<main class="container" style="height: 100vh;">
     <div class="card" style='background-color: #ADD8E6;'><br>
         <h1 class='text-center'>Manage Friends</h1><br>
         <div class="table-responsive">

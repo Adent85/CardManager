@@ -23,8 +23,7 @@
                 <!-- Navbar brand -->
                 <?php if(utility::getUserIdFromSession() == 0 ){?>
                     <a class="navbar-brand me-2" href="user_manager/?controllerRequest=show_home_page"><i class="fas fa-hat-wizard"></i></a>
-                <?php }
-                       elseif(utility::getUserIdFromSession() > 0 ){?>
+                <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
                         <a class="navbar-brand me-2" href="user_manager/?controllerRequest=user_home"><i class="fas fa-hat-wizard"></i></a>
                  <?php } ?>
                 <!-- Toggle button -->
@@ -38,13 +37,81 @@
                       <?php if(utility::getUserIdFromSession() == 0 ){?>
                         <a class="nav-link text-white" href="user_manager/?controllerRequest=show_home_page">Card Manager</a>
                     </li>
-                      <?php }
-                            elseif(utility::getUserIdFromSession() > 0 ){?>
+                      <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Card Manager</a>
                     </li>
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Home</a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle text-white"
+                        href="#"
+                        id="navbarDropdownDecks"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Decks
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownDecks">
+                        <li>
+                          <a class="dropdown-item" href="deck_manager/?controllerRequest=create_deck">Create New Deck</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="deck_manager/?controllerRequest=view_decks">View Decks</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle text-white"
+                        href="#"
+                        id="navbarDropdownFriend"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Friends
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownFriend">
+                        <li>
+                          <a class="dropdown-item" href="friend_manager/?controllerRequest=view_users">Find Friends</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="friend_manager/?controllerRequest=view_friends">View Friends</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="friend_manager/?controllerRequest=friend_request">View Friend Requests</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle text-white"
+                        href="#"
+                        id="navbarDropdownTrade"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Trades
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownTrade">
+                        <li>
+                          <a class="dropdown-item" href="trade_manager/?controllerRequest=view_purposed_trades">View Purposed Trades</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="trade_manager/?controllerRequest=Vvew_incoming_trades">View Incoming Trades</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#"></a>
+                        </li>
+                      </ul>
                     </li>
                       <?php } ?>               
                   </ul>
@@ -142,8 +209,7 @@
                             </div>
                           </div>
                         </div>
-                  <?php }
-                        elseif(utility::getUserIdFromSession() > 0 ){?>
+                  <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
                           <div>
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=show_home_page"><i class="bi bi-gear text-white"></i>&nbsp;<?php echo $userName;?></a>
                           </div>

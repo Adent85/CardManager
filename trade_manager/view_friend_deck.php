@@ -11,26 +11,33 @@ Copyright Apr 2, 2022 Kyle Fisk
         <div class="card align-items-center" style='background-color: #ADD8E6;'>
             <div class="col-md-4">
                 <br>
-                <img src="<?php echo $friend_card->getCardPicture();?>" class="card-img-top img-fluid img-thumbnail" alt="<?php echo $friend_card->getName();?>" title="Card Attributes" data-mdb-toggle="popover" data-mdb-trigger="hover" data-mdb-html="true" 
-                     data-mdb-content="<?php if($friend_card->getAttributeId()!=null){echo $friend_card->getAttributeId();}?><br /><?php if($friend_card->getAttributeId2()!=null){echo $friend_card->getAttributeId2();}?><br /><?php if($friend_card->getAttributeId3()!=null){echo $friend_card->getAttributeId3();}?>
-                     <br /><?php if($friend_card->getAttributeId4()!=null){echo $friend_card->getAttributeId4();}?><br /><?php if($friend_card->getAttributeId5()!=null){echo $friend_card->getAttributeId5();}?>"/>
+                <div class="bg-image hover-overlay">
+                    <img src="<?php echo $friend_card->getCardPicture();?>" class="card-img-top img-fluid img-thumbnail" alt="<?php echo $friend_card->getName();?>"/>
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
+                            <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                                <h2 class="text-white mb-0">Attributes</h2><br />
+                                <p class="text-white mb-0">php code for card attributes</p><br >
+                            </div>
+                        </div>
+                </div>
             </div>
             <div class="card-body">
                 <h5 class="card-title text-center"><?php echo $friend_card->getName();?></h5>
                 <p class="card-text text-center"><?php echo $friend_card->getDescription();?></p>
-                    <button type="button" class="btn btn-danger btn-block" data-mdb-toggle="modal" data-mdb-target="#deleteCardModal<?php echo $friend_card->getID();?>">Remove Card from Deck</button><div class="modal fade" id="deleteCardModal<?php echo $friend_card->getID();?>" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-success btn-block" data-mdb-toggle="modal" data-mdb-target="#tradeCardModal<?php echo $friend_card->getID();?>">Initiate Card Trade</button>
+                    <div class="modal fade" id="tradeCardModal<?php echo $friend_card->getID();?>" tabindex="-1" aria-labelledby="tradeCardModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title text-danger" id="deleteCardModalLabel">Delete Card!!!</h5>
+                            <h5 class="modal-title text-danger" id="tradeCardModalLabel">Initiate Trade</h5>
                             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <div class="modal-body text-danger">Confirm that you want to Remove <?php echo $friend_card->getName();?> from <?php echo $friend_deck->getName();?> permanently!</div>
+                          <div class="modal-body ">Confirm you want to start a trade for <?php echo $friend_card->getName();?> from <?php echo $friend_deck->getName();?></div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                            <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="delete_card">
-                            <input type="hidden" name="deck_id" value='<?php echo $friend_deck->getID();?>'>
-                            <input type="hidden" name="card_id" value='<?php echo $friend_card->getID();?>'><button type="submit" class="btn btn-danger">Remove Card from Deck</button></form>
+                            <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="initiate_friend_card_trade">
+                            <input type="hidden" name="trade_friend_deck" value='<?php echo $friend_deck->getID();?>'>
+                            <input type="hidden" name="trade_friend_card" value='<?php echo $friend_card->getID();?>'><button type="submit" class="btn btn-success">Start Trade</button></form>
                           </div>
                         </div>
                       </div>

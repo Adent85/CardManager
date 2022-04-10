@@ -21,11 +21,11 @@ Copyright Feb 27, 2022 Kyle Fisk
                 </select>
             </div><br>
             <div class="form-outline mb-4">
-                <input type="text" id="deckName" name="deckName" class="form-control" required/>
+                <input type="text" id="deckName" name="deckName" class="form-control bg-white" required/>
                 <label class="form-label" for="deckName">Name of Deck</label>
             </div>
             <div class="form-outline mb-4">
-                <input type="text" id="deckDescription" name="deckDescription" class="form-control" required/>
+                <input type="text" id="deckDescription" name="deckDescription" class="form-control bg-white" required/>
                 <label class="form-label" for="deckDescription">Description of Deck</label>
             </div><br>
             <button type="submit" class="btn btn-primary btn-block">Create Deck</button>

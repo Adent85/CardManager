@@ -15,7 +15,7 @@ class deck_db {
     
     public static function getAllDeckTypes() {
         $db = Database::getDB();
-        $query_deck_type = 'SELECT * FROM deck_type
+        $query_deck_type = 'SELECT ID, name FROM deck_type
                            WHERE active = 1';
         try{
             $statement = $db->prepare($query_deck_type);
@@ -30,7 +30,8 @@ class deck_db {
             }
             return $deck_types;    
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -49,13 +50,16 @@ class deck_db {
             $statement->bindValue(':deckTypeID', $deck->getDeckTypeID());
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
     public static function getUserDecks($userId) {
         $db = Database::getDB();
-        $query_get_decks = 'SELECT * FROM deck
+        $query_get_decks = 'SELECT ID, userID, name, description, deckImage,
+                            deckTypeID, totalCards, active
+                            FROM deck
                             WHERE userID = :userID
                             AND active = true';
         try{
@@ -79,13 +83,16 @@ class deck_db {
             }
             return $user_decks;
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
 
     public static function getDeck($deckID) {
         $db = Database::getDB();
-        $query_get_deck = 'SELECT * FROM deck
+        $query_get_deck = 'SELECT ID, userID, name, description, deckImage,
+                           deckTypeID, totalCards, active
+                           FROM deck
                            WHERE ID = :deckID';
         try{
             $statement = $db->prepare($query_get_deck);
@@ -104,7 +111,8 @@ class deck_db {
 
             return $deck;
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -117,7 +125,8 @@ class deck_db {
             $statement->bindValue(':deckID', $deckID);
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -130,7 +139,8 @@ class deck_db {
             $statement->bindValue(':cardID', $cardID);
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -143,7 +153,8 @@ class deck_db {
             $statement->bindValue(':deckID', $deckID);
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
@@ -162,14 +173,26 @@ class deck_db {
             $statement->bindValue(':deckID', $deck->getID());
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
     public static function getCardsByDeckType($deckTypeID) {
         $db = Database::getDB();
-        $query_get_cards = 'SELECT * FROM card
-                           WHERE deckTypeID = :deckTypeID';
+        $query_get_cards = 'SELECT c.ID AS cardID, c.name AS cardName, c.description AS cardDescription, 
+                            c.deckTypeID AS cardDeckTypeID, c.attributeID, ca1.name AS a1Name,
+                            ca1.description AS a1Description, ca1.value AS a1Value, c.attributeID2, ca2.name AS a2Name,
+                            ca2.description AS a2Description, ca2.value AS a2Value, c.attributeID3, ca3.name AS a3Name,
+                            ca3.description AS a3Description, ca3.value AS a3Value, c.attributeID4, ca4.name AS a4Name,
+                            ca4.description AS a4Description, ca4.value AS a4Value, c.attributeID5, ca5.name AS a5Name,
+                            ca5.description AS a5Description, ca5.value AS a5Value, c.cardPicture, c.active FROM card c
+                            LEFT JOIN card_attribute ca1 ON c.attributeID = ca1.ID
+                            LEFT JOIN card_attribute ca2 ON c.attributeID2 = ca2.ID
+                            LEFT JOIN card_attribute ca3 ON c.attributeID3 = ca3.ID
+                            LEFT JOIN card_attribute ca4 ON c.attributeID4 = ca4.ID
+                            LEFT JOIN card_attribute ca5 ON c.attributeID5 = ca5.ID 
+                            WHERE c.deckTypeID = :deckTypeID';
         try{
             $statement = $db->prepare($query_get_cards);
             $statement->bindValue(':deckTypeID', $deckTypeID);
@@ -178,15 +201,25 @@ class deck_db {
             $cards = array();
 
             foreach ($statement as $row) {
-                $card = new card($row['ID'],
-                                 $row['name'],
-                                 $row['description'],
-                                 $row['deckTypeID'],
+                $card = new card($row['cardID'],
+                                 $row['cardName'],
+                                 $row['cardDescription'],
+                                 $row['cardDeckTypeID'],
                                  $row['attributeID'],
+                                 $ca1 = new card_attribute($row['attributeID'],
+                                         $row['a1Name'], $row['a1Description'],$row['a1Value']),
                                  $row['attributeID2'],
+                                 $ca2 = new card_attribute($row['attributeID2'],
+                                         $row['a2Name'], $row['a2Description'],$row['a2Value']),
                                  $row['attributeID3'],
+                                 $ca3 = new card_attribute($row['attributeID3'],
+                                         $row['a3Name'], $row['a3Description'],$row['a3Value']),
                                  $row['attributeID4'],
+                                 $ca4 = new card_attribute($row['attributeID4'],
+                                         $row['a4Name'], $row['a4Description'],$row['a4Value']),
                                  $row['attributeID5'],
+                                 $ca5 = new card_attribute($row['attributeID5'],
+                                         $row['a5Name'], $row['a5Description'],$row['a5Value']),
                                  $row['cardPicture'],
                                  $row['active']);
 
@@ -195,47 +228,59 @@ class deck_db {
 
             return $cards;
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
     public static function getCardByCardId($cardID){
         $db = Database::getDB();
-        $query_get_card = 'SELECT c.ID, c.name, c.description, c.deckTypeID FROM card c
-                           WHERE c.ID = :cardID
-                           UNION
-                           SELECT ca.ID as attribute1, ca.ID as attribute2, 
-                           ca.ID as attribute3, ca.ID as attribute4,
-                           ca.ID as attribute5 FROM card_attribute ca
-                           JOIN card c 
-                           ON ca.ID = c.attributeID
-                           AND ca.ID = c.attributeID2
-                           AND ca.ID = c.attributeID3
-                           AND ca.ID = c.attributeID4
-                           AND ca.ID = c.attributeID5';
+        $query_get_card =   'SELECT c.ID AS cardID, c.name AS cardName, c.description AS cardDescription, 
+                            c.deckTypeID AS cardDeckTypeID, c.attributeID, ca1.name AS a1Name,
+                            ca1.description AS a1Description, ca1.value AS a1Value, c.attributeID2, ca2.name AS a2Name,
+                            ca2.description AS a2Description, ca2.value AS a2Value, c.attributeID3, ca3.name AS a3Name,
+                            ca3.description AS a3Description, ca3.value AS a3Value, c.attributeID4, ca4.name AS a4Name,
+                            ca4.description AS a4Description, ca4.value AS a4Value, c.attributeID5, ca5.name AS a5Name,
+                            ca5.description AS a5Description, ca5.value AS a5Value, c.cardPicture, c.active FROM card c
+                            LEFT JOIN card_attribute ca1 ON c.attributeID = ca1.ID
+                            LEFT JOIN card_attribute ca2 ON c.attributeID2 = ca2.ID
+                            LEFT JOIN card_attribute ca3 ON c.attributeID3 = ca3.ID
+                            LEFT JOIN card_attribute ca4 ON c.attributeID4 = ca4.ID
+                            LEFT JOIN card_attribute ca5 ON c.attributeID5 = ca5.ID 
+                            WHERE c.ID = :cardID';
+
                            
         try{
             $statement = $db->prepare($query_get_card);
             $statement->bindValue(':cardID', $cardID);
             $statement->execute();
+            $row = $statement->fetch();
 
-
-            foreach ($statement as $row) {
-                $card = new card($row['ID'],
-                                      $row['name'],
-                                      $row['description'],
-                                      $row['deckTypeID'],
-                                      $row['attribute1'],
-                                      $row['attribute2'],
-                                      $row['attribute3'],
-                                      $row['attribute4'],
-                                      $row['attribute5'],
-                                      $row['cardPicture'],
-                                      $row['active']);
-            }
+            $card = new card($row['cardID'],
+                                 $row['cardName'],
+                                 $row['cardDescription'],
+                                 $row['cardDeckTypeID'],
+                                 $row['attributeID'],
+                                 $ca1 = new card_attribute($row['attributeID'],
+                                         $row['a1Name'], $row['a1Description'],$row['a1Value']),
+                                 $row['attributeID2'],
+                                 $ca2 = new card_attribute($row['attributeID2'],
+                                         $row['a2Name'], $row['a2Description'],$row['a2Value']),
+                                 $row['attributeID3'],
+                                 $ca3 = new card_attribute($row['attributeID3'],
+                                         $row['a3Name'], $row['a3Description'],$row['a3Value']),
+                                 $row['attributeID4'],
+                                 $ca4 = new card_attribute($row['attributeID4'],
+                                         $row['a4Name'], $row['a4Description'],$row['a4Value']),
+                                 $row['attributeID5'],
+                                 $ca5 = new card_attribute($row['attributeID5'],
+                                         $row['a5Name'], $row['a5Description'],$row['a5Value']),
+                                 $row['cardPicture'],
+                                 $row['active']);
             return $card;
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     public static function addCardToDeck($deckID,$cardID){
@@ -250,7 +295,8 @@ class deck_db {
             $statement->bindValue(':deckID', $deckID);
             $statement->execute();
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
        
@@ -273,33 +319,34 @@ class deck_db {
 
             foreach ($statement as $row) {
                 $cards[] = new card($row['ID'],
-                                      $row['name'],
-                                      $row['description'],
-                                      $row['deckTypeID'],
-                                      $row['attributeID'],
-                                      $row['attributeID2'],
-                                      $row['attributeID3'],
-                                      $row['attributeID4'],
-                                      $row['attributeID5'],
-                                      $row['cardPicture'],
-                                      $row['active']);
+                                    $row['name'],
+                                    $row['description'],
+                                    $row['deckTypeID'],
+                                    $row['attributeID'],
+                                    $row['attributeID2'],
+                                    $row['attributeID3'],
+                                    $row['attributeID4'],
+                                    $row['attributeID5'],
+                                    $row['cardPicture'],
+                                    $row['active']);
             }
             return $cards;
         }catch (PDOException $e) {
-            display_db_error($e->getMessage);
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
         }
     }
     
         
-    public static function getCardAttributes($cards){
-        $db = Database::getDB();
-        $query_get_card_attributes = 'SELECT * FROM card_attribute ca
-                                      WHERE ca.ID = :attribute1
-                                      OR ca.ID = :attribute2
-                                      OR ca.ID = :attribute3
-                                      OR ca.ID = :attribute4
-                                      OR ca.ID = :attribute5';
-        
-        
-    }
+//    public static function getCardAttributes($cards){
+//        $db = Database::getDB();
+//        $query_get_card_attributes = 'SELECT * FROM card_attribute ca
+//                                      WHERE ca.ID = :attribute1
+//                                      OR ca.ID = :attribute2
+//                                      OR ca.ID = :attribute3
+//                                      OR ca.ID = :attribute4
+//                                      OR ca.ID = :attribute5';
+//        
+//        
+//    }
 }

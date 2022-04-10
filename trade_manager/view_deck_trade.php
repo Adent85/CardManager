@@ -1,6 +1,6 @@
 <!--
 
-Copyright Mar 14, 2022 Kyle Fisk
+Copyright Apr 10, 2022 Kyle Fisk
 
 -->
 <?php require_once '../view/header.php';?><br>
@@ -24,20 +24,20 @@ Copyright Mar 14, 2022 Kyle Fisk
             <div class="card-body">
                 <h5 class="card-title text-center"><?php echo $card->getName();?></h5>
                 <p class="card-text text-center"><?php echo $card->getDescription();?></p>
-                    <button type="button" class="btn btn-danger btn-block" data-mdb-toggle="modal" data-mdb-target="#deleteCardModal<?php echo $card->getID();?>">Remove Card from Deck</button>
-                    <div class="modal fade" id="deleteCardModal<?php echo $card->getID();?>" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-danger btn-block" data-mdb-toggle="modal" data-mdb-target="#tradeCardModal<?php echo $card->getID();?>">Trade Card</button>
+                    <div class="modal fade" id="tradeCardModal<?php echo $card->getID();?>" tabindex="-1" aria-labelledby="tradeCardModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title text-danger" id="deleteCardModalLabel">Delete Card!!!</h5>
+                            <h5 class="modal-title text-danger" id="tradeCardModalLabel">Trade Card!!!</h5>
                             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <div class="modal-body text-danger">Confirm that you want to Remove <?php echo $card->getName();?> from <?php echo $deck->getName();?> permanently!</div>
+                          <div class="modal-body text-danger">Confirm that you want to Trade <?php echo $card->getName();?> from <?php echo $deck->getName();?> permanently!</div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                            <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="delete_card">
+                            <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="trade_card">
                             <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
-                            <input type="hidden" name="card_id" value='<?php echo $card->getID();?>'><button type="submit" class="btn btn-danger">Remove Card from Deck</button></form>
+                            <input type="hidden" name="card_id" value='<?php echo $card->getID();?>'><button type="submit" class="btn btn-danger">Trade Card</button></form>
                           </div>
                         </div>
                       </div>
