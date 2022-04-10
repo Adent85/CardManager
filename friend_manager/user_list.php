@@ -7,6 +7,16 @@ Copyright Mar 25, 2022 Kyle Fisk
 <main class="container" style="height: 100vh;">
     <div class="card" style='background-color: #ADD8E6;'><br>
         <h1 class='text-center'>Find Friends</h1><br>
+        <div class="d-flex justify-content-center mb-2">
+            <form action="friend_manager/index.php" method="post">
+                <div class="form-outline mb-4">
+                    <input type="text" id="search_name" name="search_name" class="form-control bg-white" required/>
+                    <label class="form-label" for="search_name">Search for a Friend:</label>
+                </div>
+                <input type="hidden" name="controllerRequest" value="search_user_list">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </form><br>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered border-dark">
                 <thead>

@@ -247,6 +247,54 @@ class user_db {
         }
         
     }
-    
 
+    public static function searchUserFriends($first_name, $last_name) {
+        $db = Database::getDB();
+        if($last_name != null){
+            $queryUser = 'SELECT ID, firstName , lastName FROM user
+                          WHERE firstName like :first_name
+                          AND lastName like :last_name';
+            try{
+                $statement = $db->prepare($queryUser);
+                $statement->bindValue(':first_name', '%'.$first_name.'%');
+                $statement->bindValue(':last_name', '%'.$last_name.'%');
+                $statement->execute();
+
+                $users = array();
+
+                foreach ($statement as $row) {
+                $user = new User($row['ID'], 
+                                 $row['firstName'], 
+                                 $row['lastName']);
+                $users[]=$user;
+                }
+                return $users;
+            }catch (PDOException $e) {
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        }else{
+            $queryUser = 'SELECT ID, firstName , lastName FROM user
+              WHERE firstName like :first_name';
+            try{
+                $statement = $db->prepare($queryUser);
+                $statement->bindValue(':first_name', '%'.$first_name.'%');
+                $statement->execute();
+                
+                
+                $users = array();
+
+                foreach ($statement as $row) {
+                $user = new User($row['ID'], 
+                                 $row['firstName'], 
+                                 $row['lastName']);
+                $users[]=$user;
+                }
+                return $users;
+            } catch (PDOException $e) {
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        }
+    }
 }

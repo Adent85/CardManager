@@ -43,6 +43,13 @@ if($controllerChoice=='view_users'){
 }elseif($controllerChoice=='view_friends'){
     $currentFriends = user_db::userFriends($user->getID());
     require_once 'friend_list.php';
+}elseif($controllerChoice=='search_user_list'){
+    $search_input = filter_input(INPUT_POST, 'search_name');
+    $searchInput = trim($search_input);
+    $last_name = (strpos($searchInput, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $searchInput);
+    $first_name = trim( preg_replace('#'.preg_quote($last_name,'#').'#', '', $searchInput ) );
+    $users = user_db::searchUserFriends($first_name, $last_name);
+    require_once 'user_list.php';
 }elseif($controllerChoice=='remove_friend'){
     $friendId = filter_input(INPUT_POST, 'friend_id');
     user_db::removeFriend($friendId, $user->getID());
