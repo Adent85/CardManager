@@ -33,11 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarButtons">
                   <!-- Left links -->
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
+                  <?php if(utility::getUserIdFromSession() == 0 ){?>
                     <li class="nav-item">
-                      <?php if(utility::getUserIdFromSession() == 0 ){?>
                         <a class="nav-link text-white" href="user_manager/?controllerRequest=show_home_page">Card Manager</a>
                     </li>
-                      <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
+                  <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Card Manager</a>
                     </li>
@@ -113,7 +114,29 @@
                         </li>
                       </ul>
                     </li>
-                      <?php } ?>               
+                    <?php if (utility::getUserIdFromSession() == 1 ){?>
+                        <li class="nav-item dropdown">
+                          <a
+                            class="nav-link dropdown-toggle text-white"
+                            href="#"
+                            id="navbarDropdownAdmin"
+                            role="button"
+                            data-mdb-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            Administration
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                            <li>
+                              <a class="dropdown-item" href="user_manager/?controllerRequest=view_users_admin">View All Users</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="deck_manager/?controllerRequest=view_cards_type_admin">View Cards by Deck Type</a>
+                            </li>
+                          </ul>
+                        </li>
+                    <?php } ?>
+                  <?php } ?>               
                   </ul>
                   <!-- Left links -->
                   <?php if(utility::getUserIdFromSession() == 0 ){?>
@@ -211,15 +234,57 @@
                         </div>
                   <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
                           <div>
-                              <a class="nav-link text-white" href="user_manager/?controllerRequest=show_home_page"><i class="bi bi-gear text-white"></i>&nbsp;<?php echo $userName;?></a>
+                            <a class="nav-link text-white" href="#" data-mdb-toggle="modal" data-mdb-target="#editModal"><i class="bi bi-gear text-white"></i>&nbsp;<?php echo $userName;?></a>
                           </div>
                           <div class="logoutButton">
                             <a class="btn btn-primary" href="user_manager/?controllerRequest=user_logout">Logout</a>
                           </div>
-                          
-                    <?php if (utility::getUserIdFromSession() == 2 ){?>
-                          
-                    <?php } ?>
+                            <!-- Modal -->
+                            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+                                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form class="row g-3" action="user_manager/index.php" method="post">
+                                        <div class="col-md-4">
+                                          <div class="form-outline">
+                                              <input type="text" class="form-control" name="editFirstName" id= "editFirstName"  value="<?php echo $user->getFirstName();?>" required />
+                                            <label for="editFirstName" class="form-label">First name</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <div class="form-outline">
+                                            <input type="text" class="form-control" name="editLastName" id= "editLastName"  value="<?php echo $user->getLastName();?>" required />
+                                            <label for="editLastName" class="form-label">Last name</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <div class="form-outline">
+                                            <input type="email" id="editEmail" name="editEmail" class="form-control" value="<?php echo $user->getEmail();?>" required />
+                                            <label class="form-label" for="editEmail">Email</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <div class="form-outline">
+                                            <input type="password" id="editPassword" name = "editPassword" class="form-control" value="<?php echo $user->getPassword();?>" required />
+                                            <label class="form-label" for="editPassword">Password</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <input type="hidden" name="controllerRequest" value="edit_user">
+                                          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                   <?php } ?>
                 </div>
                 <!-- Collapsible wrapper -->

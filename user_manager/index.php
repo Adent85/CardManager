@@ -14,7 +14,7 @@ $lifetime = 60 * 60 * 24 * 14;
 session_set_cookie_params($lifetime, '/');
 session_start();
 
-if (isset($_SESSION['user'])) { 
+if (isset($_SESSION['user']) && $_SESSION['user']==true  ) { 
  $user=$_SESSION['user'];
  $userName= $user->getFirstName()." ".$user->getLastName();
  $loggedin = true;
@@ -66,6 +66,9 @@ if ($controllerChoice=='show_home_page') {
     session_destroy();
     $loggedin= false;
     require_once '../index.php';
+}elseif ($controllerChoice=='edit_user') {
+    $user = $_SESSION['user'];
+    require_once 'edit_user.php';
 }elseif ($controllerChoice=='user_home') {
     require_once 'user_home.php';
 }
