@@ -10,6 +10,7 @@ require_once '../model/database.php';
 require_once '../model/user.php';
 require_once '../model/utility.php';
 
+
 $lifetime = 60 * 60 * 24 * 14;
 session_set_cookie_params($lifetime, '/');
 session_start();
@@ -18,6 +19,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']==true  ) {
  $user=$_SESSION['user'];
  $userName= $user->getFirstName()." ".$user->getLastName();
  $loggedin = true;
+}
+
+if(filter_input(INPUT_COOKIE, 'email') != false && filter_input(INPUT_COOKIE, 'password') != false){
+    $email = filter_input(INPUT_COOKIE, 'email');
+    $password = filter_input(INPUT_COOKIE, 'password');
+}else{
+    $email = "";
+    $password = "";
 }
     $controllerChoice = filter_input(INPUT_POST, 'controllerRequest');
 if ($controllerChoice == NULL) {
@@ -35,7 +44,7 @@ if ($controllerChoice=='show_home_page') {
     $password=filter_input(INPUT_POST, 'inputPassword');
     $userRoleId=1;
     $active = 1;  
-    $user = new User($firstName, $lastName, $email, $password, $userRoleId, $active);
+    $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, $userRoleId, $active);
     $ID=user_db::insertUserData($user);
     if($ID > 0){
     $success_message = 'Your record was sucessfully inserted';
@@ -49,19 +58,21 @@ if ($controllerChoice=='show_home_page') {
     $email=filter_input(INPUT_POST, 'inputEmail', FILTER_VALIDATE_EMAIL);
     $password=filter_input(INPUT_POST, 'inputPassword');  
     $user=user_db::userLogin($email,$password);
+    $remember = filter_input(INPUT_POST, 'rememberInput');
+    if(!empty($remember)){
+        utility::createEmailCookie();
+        utility::createPasswordCookie();
+        utility::createRememberCookie();
+    }else{
+        $expire = strtotime('-1 year');
+        setcookie('email', '', $expire, '/');
+        setcookie('password', '', $expire, '/');
+        setcookie('remember', '', $expire, '/');
+    }
     $_SESSION['user'] = $user;
     $userName= $user->getFirstName()." ".$user->getLastName();
     require_once 'user_home.php';
 }else if($controllerChoice=='user_logout'){   
-    $name = session_name();
-    $expire = strtotime('-1 year');
-    $params = session_get_cookie_params();
-    $path = $params['path'];
-    $domain = $params['domain'];
-    $secure = $params['secure'];
-    $httponly = $params['httponly'];
-    setcookie($name, '', $expire, $path, $domain,
-     $secure, $httponly);
     $_SESSION = array();
     session_destroy();
     $loggedin= false;

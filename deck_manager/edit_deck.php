@@ -11,7 +11,8 @@ Copyright Mar 6, 2022 Kyle Fisk
       </div>
       <div class="card-body">
           <form action="deck_manager/index.php" method="post">
-              <input type="hidden" name="controllerRequest" value="update_deck">             
+              <input type="hidden" name="controllerRequest" value="update_deck">  
+              <input type="hidden" name="deck_id" value="<?php echo $deck->getID();?>">
             <div class="form-outline mb-4">
                 <input type="text" id="deckName" name="deckName" class="form-control bg-white" value="<?php echo $deck->getName();?>" required/>
                 <label class="form-label " for="deckName">Name of Deck</label>

@@ -158,22 +158,20 @@ class deck_db {
         }
     }
     
-    public static function updateDeck($deck){
+    public static function updateDeck($deckID, $deckName, $deckDescription){
         $db = Database::getDB();
         $query = 'UPDATE deck
                   SET name = :name,
-                      description = :description,
-                      dateUpdated = :dateUpdated,
+                      description = :description
                   WHERE ID = :deckID';
         try{
             $statement = $db->prepare($query);
-            $statement->bindValue(':name', $deck->getName());
-            $statement->bindValue(':description', $deck->getDescription());
-            $statement->bindValue(':dateUpdated', new DateTime());
-            $statement->bindValue(':deckID', $deck->getID());
+            $statement->bindValue(':name', $deckName);
+            $statement->bindValue(':description', $deckDescription);
+            $statement->bindValue(':deckID', $deckID);
             $statement->execute();
         }catch (PDOException $e) {
-            $error_message = $e->getMessage();
+            $error_message = $e->getMessage(); 
             Database::display_db_error($error_message);
         }
     }
@@ -336,17 +334,4 @@ class deck_db {
             Database::display_db_error($error_message);
         }
     }
-    
-        
-//    public static function getCardAttributes($cards){
-//        $db = Database::getDB();
-//        $query_get_card_attributes = 'SELECT * FROM card_attribute ca
-//                                      WHERE ca.ID = :attribute1
-//                                      OR ca.ID = :attribute2
-//                                      OR ca.ID = :attribute3
-//                                      OR ca.ID = :attribute4
-//                                      OR ca.ID = :attribute5';
-//        
-//        
-//    }
 }

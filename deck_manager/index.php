@@ -33,7 +33,6 @@ if ($controllerChoice == NULL) {
 if ($controllerChoice == NULL) {
     $controllerChoice = 'show_home_page';
 }}
-
 if($controllerChoice=='create_deck'){
     $deck_types = deck_db::getAllDeckTypes();
     require_once 'create_deck.php';
@@ -53,9 +52,12 @@ if($controllerChoice=='create_deck'){
     $user_decks=deck_db::getUserDecks($user->getID());
     require_once 'deck_list.php';
 }elseif($controllerChoice=='edit_deck'){
-    $deckID = filter_input(INPUT_POST, 'deck_id');
-    $deck=deck_db::getDeck($deckID);
+    $deck=deck_db::getDeck(filter_input(INPUT_POST, 'deck_id'));
     require_once 'edit_deck.php';
+}elseif($controllerChoice=='update_deck'){
+    deck_db::updateDeck(filter_input(INPUT_POST, 'deck_id'), filter_input(INPUT_POST, 'deckName'), filter_input(INPUT_POST, 'deckDescription'));
+    $user_decks=deck_db::getUserDecks($user->getID());
+    require_once 'deck_list.php';
 }elseif($controllerChoice=='delete_deck'){
     $deckID = filter_input(INPUT_POST, 'deck_id');
     deck_db::deleteDeckFromDeckCardTable($deckID);

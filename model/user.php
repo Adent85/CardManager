@@ -25,11 +25,13 @@ class user {
         }
     }
     
-    public function __construct3($id, $firstName, $lastName) {
+    public function __construct4($id, $firstName, $lastName, $userRoleId) {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->userRoleId = $userRoleId;
     }
+    
     
     public function __construct6($firstName, $lastName, $email, $password, $userRoleId, $active) {
         $this->firstName = $firstName;

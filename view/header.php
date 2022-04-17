@@ -153,13 +153,13 @@
                                 <form class="px-4 py-3" action="user_manager/index.php" method="post">
                                   <!-- Email input -->
                                   <div class="form-outline mb-4">
-                                      <input type="email" id="email" name= "inputEmail" class="form-control" required value="a@a.com"/>
+                                      <input type="email" id="email" name= "inputEmail" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required/>
                                     <label class="form-label" for="email">Email address</label>
                                   </div>
 
                                   <!-- Password input -->
                                   <div class="form-outline mb-4">
-                                      <input type="password" id="password" name= "inputPassword" class="form-control" required value="a"/>
+                                      <input type="password" id="password" name= "inputPassword" class="form-control" value="<?php echo htmlspecialchars($password); ?>" required/>
                                     <label class="form-label" for="password">Password</label>
                                   </div>
 
@@ -168,7 +168,7 @@
                                     <div class="col d-flex justify-content-center">
                                       <!-- Checkbox -->
                                       <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="rememberInput" id="rememberCheckBox" checked/>
+                                        <input class="form-check-input" type="checkbox" value="1" name="rememberInput" id="rememberCheckBox" <?php if($remember == true){?> checked <?php }elseif($remember == false){?> <?php } ?>/>
                                         <label class="form-check-label" for="rememberCheckBox"> Remember me </label>
                                       </div>
                                     </div>

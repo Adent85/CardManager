@@ -79,5 +79,5 @@ if ($controllerChoice=='view_decks_for_trade') {
 }elseif ($controllerChoice == 'purpose_trade') {
     $trade_request = $_SESSION['trade_request'];
     trade_card_db::createNewTrade($trade_request);
-    $purposed_trades = trade_card_db::getPurposedTrades($user->getID());
+    $purposed_trades = trade_card_db::getUserPurposedTrades($user->getID());
 }

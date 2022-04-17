@@ -3,15 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/trade_manager/card_trade.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/deck_manager/deck_list.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/user_db.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/deck_manager/index.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/user.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/friend_manager/index.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/trade_request.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/friend_manager/friend_list.php</file>
-            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/deck_db.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/trade_card_db.php</file>
             <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/trade_manager/index.php</file>
         </group>
     </open-files>

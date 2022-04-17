@@ -8,6 +8,9 @@ Copyright Feb 27, 2022 Kyle Fisk
 <?php require_once '../view/header.php';?><br>
 <main class="container" style="height: 100vh;">
     <div class="card" style='background-color: #ADD8E6;'>
+      <div class="card-header">
+          <h1 class="text-center">Create New Deck</h1> 
+      </div>
       <div class="card-body">
           <form action="deck_manager/index.php" method="post">
               <input type="hidden" name="controllerRequest" value="insert_deck">             

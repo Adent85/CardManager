@@ -14,7 +14,7 @@ class Database{
                 self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
-                include('../errors/database_error.php');
+                display_db_error($error_message);
                 exit();
             }
         }

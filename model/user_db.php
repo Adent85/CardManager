@@ -12,29 +12,26 @@
  * @author Kyle Fisk 
  */
 class user_db {
-    public static function userLogin($email,$password){//verifys user login information
+    public static function userLogin($email,$passwordInput){//verifys user login information
         $db = Database::getDB();
-        $queryUser = 'SELECT * FROM user
+        $queryUser = 'SELECT ID, firstName, lastName, password, userRoleID, active  FROM user
                       WHERE email = :email
-                      AND password = :password';
+                      AND active = 1';
         try{
             $statement = $db->prepare($queryUser);
             $statement->bindValue(':email', $email);
-            $statement->bindValue(':password', $password);
             $statement->execute();
             $row = $statement->fetch();
-            if($row==false){
-                $user = false;
+            $hash = $row['password']; 
+            if(password_verify($passwordInput, $hash)){
+                $user = new User(0, $row['firstName'], 
+                             $row['lastName'],                             
+                             $row['userRoleID']);
+                $user->setID($row['ID']);
                 return $user;
             }else{
-            $user = new User($row['firstName'], 
-                             $row['lastName'], 
-                             $row['email'],                           
-                             $row['password'], 
-                             $row['userRoleID'],
-                             $row['active']);
-            $user->setID($row['ID']);
-            return $user;
+                $user = false;
+                return $user;
             }
         }catch( PDOException $e){
             $error_message = $e->getMessage();
@@ -44,6 +41,7 @@ class user_db {
     
     public static function insertUserData($user){//inserts new user 
         $db = Database::getDB();
+        $hash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $query = 'INSERT INTO user
                  (firstName, lastName, email, password, userRoleID)
               VALUES
@@ -53,7 +51,7 @@ class user_db {
             $statement->bindValue(':first_name', $user->getFirstName());
             $statement->bindValue(':last_name', $user->getLastName());
             $statement->bindValue(':email', $user->getEmail());
-            $statement->bindValue(':password', $user->getPassword());
+            $statement->bindValue(':password', $hash);
             $statement->bindValue(':user_role_id', $user->getUserRoleId());
             $statement->execute();
             $ID= $db->lastInsertId(); 
@@ -67,7 +65,7 @@ class user_db {
     
     public static function getActiveUsers(){
         $db = Database::getDB();
-        $queryUser = 'SELECT ID, firstName , lastName FROM user
+        $queryUser = 'SELECT ID, firstName , lastName, userRoleID FROM user
                       WHERE active = 1';
         try{
             $statement = $db->prepare($queryUser);
@@ -78,7 +76,8 @@ class user_db {
             foreach ($statement as $row) {
             $user = new User($row['ID'], 
                              $row['firstName'], 
-                             $row['lastName']);
+                             $row['lastName'],                             
+                             $row['userRoleID']);
             $users[]=$user;
             }
             return $users;

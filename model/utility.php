@@ -36,4 +36,28 @@ class utility {
        }
        return $deckImage;
    }
+   
+   public static function createEmailCookie(){
+        $name = 'email';
+        $value = filter_input(INPUT_POST, 'inputEmail');
+        $expire = strtotime('+1 year');
+        $path = '/';
+        setcookie($name,$value,$expire,$path);
+    }
+    public static function createPasswordCookie(){
+        $name = 'password';
+        $value = filter_input(INPUT_POST, 'inputPassword');
+        $expire = strtotime('+1 year');
+        $path = '/';
+        setcookie($name,$value,$expire,$path);
+    }
+
+    public static function createRememberCookie() {
+        $name = 'remember';
+        $value = true;
+        $expire = strtotime('+1 year');
+        $path = '/';
+        setcookie($name,$value,$expire,$path);
+    }
+
 }

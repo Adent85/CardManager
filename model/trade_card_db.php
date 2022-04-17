@@ -38,7 +38,7 @@ class trade_card_db {
         }
     }
 
-    public static function getPurposedTrades($userID) {
+    public static function getUserPurposedTrades($userID) {
         $db = Database::getDB();
         $query_purposed_trade = 'SELECT ID, initiator_id, recipient_card_id, recipient_deck_id, 
                                initiator_card1_id, initiator_deck1_id, initiator_card2_id, initiator_deck2_id, 
