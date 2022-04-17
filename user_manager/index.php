@@ -42,9 +42,8 @@ if ($controllerChoice=='show_home_page') {
     $lastName=filter_input(INPUT_POST, 'inputLastName');
     $email=filter_input(INPUT_POST, 'inputEmail', FILTER_VALIDATE_EMAIL);
     $password=filter_input(INPUT_POST, 'inputPassword');
-    $userRoleId=1;
-    $active = 1;  
-    $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, $userRoleId, $active);
+    $userRoleId=1; 
+    $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, $userRoleId);
     $ID=user_db::insertUserData($user);
     if($ID > 0){
     $success_message = 'Your record was sucessfully inserted';
@@ -78,8 +77,100 @@ if ($controllerChoice=='show_home_page') {
     $loggedin= false;
     require_once '../index.php';
 }elseif ($controllerChoice=='edit_user') {
-    $user = $_SESSION['user'];
-    require_once 'edit_user.php';
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $userId = filter_input(INPUT_POST, 'editUserId');
+        $firstName= filter_input(INPUT_POST, 'editFirstName');
+        $lastName=filter_input(INPUT_POST, 'editLastName');
+        $email=filter_input(INPUT_POST, 'editEmail', FILTER_VALIDATE_EMAIL);
+        $password=filter_input(INPUT_POST, 'editPassword');
+        $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, 2);
+        $user->setID($userId);
+        user_db::updateUser($user);
+        $_SESSION['user'] = $user;
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }else{
+        $email=filter_input(INPUT_POST, 'editEmail', FILTER_VALIDATE_EMAIL);
+        $password=filter_input(INPUT_POST, 'editPassword');
+        if(user_db::validateUser($email, $password)){
+            $userId = filter_input(INPUT_POST, 'editUserId');
+            $firstName= filter_input(INPUT_POST, 'editFirstName');
+            $lastName=filter_input(INPUT_POST, 'editLastName'); 
+            $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, 1);
+            $user->setID($userId);
+            user_db::updateUser($user);
+            $_SESSION['user'] = $user;
+            $userName= $user->getFirstName()." ".$user->getLastName();
+            include 'user_home.php';
+        }else{
+            $_SESSION['user'] = $user;
+            $userName= $user->getFirstName()." ".$user->getLastName();
+            include 'user_home.php';
+        }
+    }
+    
 }elseif ($controllerChoice=='user_home') {
     require_once 'user_home.php';
+}elseif ($controllerChoice=='view_user_admin') {
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $users = user_db::getAllUsers();
+        require_once 'view_user_admin.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
+
+}elseif ($controllerChoice=='search_user_list_admin') {
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $search_input = filter_input(INPUT_POST, 'search_name');
+        $searchInput = trim($search_input);
+        $last_name = (strpos($searchInput, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $searchInput);
+        $first_name = trim( preg_replace('#'.preg_quote($last_name,'#').'#', '', $searchInput ) );
+        $users = user_db::searchUserFriends($first_name, $last_name);
+        require_once 'view_user_admin.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
+}elseif ($controllerChoice=='edit_user_admin') {
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $userId = filter_input(INPUT_POST, 'editUserId');
+        $firstName= filter_input(INPUT_POST, 'editFirstName');
+        $lastName=filter_input(INPUT_POST, 'editLastName');
+        $email=filter_input(INPUT_POST, 'editEmail', FILTER_VALIDATE_EMAIL);
+        $password=filter_input(INPUT_POST, 'editPassword');
+        $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, 1);
+        user_db::updateUser($user);
+        $users = user_db::getAllUsers();
+        require_once 'view_user_admin.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
+}elseif ($controllerChoice=='deactivate_user_admin') {
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $userId = filter_input(INPUT_POST, 'editUserId');
+        user_db::deactivateUser($userId);
+        $users = user_db::getAllUsers();
+        require_once 'view_user_admin.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
+    
+}elseif ($controllerChoice=='activate_user_admin') {
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $userId = filter_input(INPUT_POST, 'editUserId');
+        user_db::activateUser($userId);
+        $users = user_db::getAllUsers();
+        require_once 'view_user_admin.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
 }

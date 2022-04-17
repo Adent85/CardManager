@@ -14,7 +14,7 @@
 class user_db {
     public static function userLogin($email,$passwordInput){//verifys user login information
         $db = Database::getDB();
-        $queryUser = 'SELECT ID, firstName, lastName, password, userRoleID, active  FROM user
+        $queryUser = 'SELECT ID, firstName, lastName, email, password, userRoleID, active  FROM user
                       WHERE email = :email
                       AND active = 1';
         try{
@@ -24,8 +24,10 @@ class user_db {
             $row = $statement->fetch();
             $hash = $row['password']; 
             if(password_verify($passwordInput, $hash)){
-                $user = new User(0, $row['firstName'], 
-                             $row['lastName'],                             
+                $user = new User($row['firstName'], 
+                             $row['lastName'], 
+                             $row['email'], 
+                             $row['password'],                             
                              $row['userRoleID']);
                 $user->setID($row['ID']);
                 return $user;
@@ -65,7 +67,7 @@ class user_db {
     
     public static function getActiveUsers(){
         $db = Database::getDB();
-        $queryUser = 'SELECT ID, firstName , lastName, userRoleID FROM user
+        $queryUser = 'SELECT ID, firstName , lastName, email, password, userRoleID FROM user
                       WHERE active = 1';
         try{
             $statement = $db->prepare($queryUser);
@@ -74,10 +76,39 @@ class user_db {
             $users = array();
 
             foreach ($statement as $row) {
-            $user = new User($row['ID'], 
-                             $row['firstName'], 
+            $user = new User($row['firstName'], 
                              $row['lastName'],                             
+                             $row['email'],                             
+                             $row['password'],                             
                              $row['userRoleID']);
+            $user->setID($row['ID']);
+            $users[]=$user;
+            }
+            return $users;
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+    
+    public static function getAllUsers(){
+        $db = Database::getDB();
+        $queryUser = 'SELECT ID, firstName , lastName, email, password, userRoleID, active FROM user';
+        try{
+            $statement = $db->prepare($queryUser);
+            $statement->execute();
+
+            $users = array();
+
+            foreach ($statement as $row) {
+            $user = new User($row['firstName'], 
+                             $row['lastName'],                             
+                             $row['email'],                             
+                             $row['password'],                             
+                             $row['userRoleID'],                             
+                             $row['active']);
+            $user->setID($row['ID']);
+            $user->activeString();
             $users[]=$user;
             }
             return $users;
@@ -250,7 +281,7 @@ class user_db {
     public static function searchUserFriends($first_name, $last_name) {
         $db = Database::getDB();
         if($last_name != null){
-            $queryUser = 'SELECT ID, firstName , lastName FROM user
+            $queryUser = 'SELECT ID, firstName , lastName, active FROM user
                           WHERE firstName like :first_name
                           AND lastName like :last_name';
             try{
@@ -265,6 +296,8 @@ class user_db {
                 $user = new User($row['ID'], 
                                  $row['firstName'], 
                                  $row['lastName']);
+                $user->setActive($row['active']);
+                $user->activeString();
                 $users[]=$user;
                 }
                 return $users;
@@ -273,7 +306,7 @@ class user_db {
                 Database::display_db_error($error_message);
             }
         }else{
-            $queryUser = 'SELECT ID, firstName , lastName FROM user
+            $queryUser = 'SELECT ID, firstName , lastName, active FROM user
               WHERE firstName like :first_name';
             try{
                 $statement = $db->prepare($queryUser);
@@ -287,6 +320,8 @@ class user_db {
                 $user = new User($row['ID'], 
                                  $row['firstName'], 
                                  $row['lastName']);
+                $user->setActive($row['active']);
+                $user->activeString();
                 $users[]=$user;
                 }
                 return $users;
@@ -296,4 +331,93 @@ class user_db {
             }
         }
     }
+    
+    public static function validateUser($email, $password) {
+        $db = Database::getDB();
+        $query = 'SELECT password from user
+                  WHERE email = :email' ;
+        try{
+            $statement = $db->prepare($query);
+            $statement->bindValue(':email', $email);
+            $statement->execute();
+            $row = $statement->fetch();
+            $hash = $row['password'];
+            return password_verify($password, $hash);
+        } catch (PDOException $e){
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+
+    public static function updateUser($user) {
+        if(utility::getUserRoleIdFromSession()== 2){
+            $db = Database::getDB();
+            $query = 'UPDATE user 
+                      SET firstName = :firstName,
+                          lastName = :lastName,
+                          email = :email,
+                          userRoleId = 2
+                          WHERE ID = :userId';
+            try{
+                $statement = $db->prepare($query);
+                $statement->bindValue(':firstName', $user->getFirstName());
+                $statement->bindValue(':lastName', $user->getLastName());
+                $statement->bindValue(':email', $user->getEmail());
+                $statement->bindValue(':userId', $user->getID());
+                $statement->execute();
+            } catch (PDOException $e){
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        }else{
+            $db = Database::getDB();
+            $query = 'UPDATE user 
+                      SET firstName = :firstName,
+                          lastName = :lastName
+                          WHERE ID = :userId';
+            try{
+                $statement = $db->prepare($query);
+                $statement->bindValue(':firstName', $user->getFirstName());
+                $statement->bindValue(':lastName', $user->getLastName());
+                $statement->bindValue(':userId', $user->getID());
+                $statement->execute();
+            } catch (PDOException $e){
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        }
+    }
+    
+    public static function deactivateUser($userId) {
+        $db = Database::getDB();
+            $query = 'UPDATE user 
+                      SET active = 0
+                          WHERE ID = :userId';
+            try{
+                $statement = $db->prepare($query);
+                $statement->bindValue(':userId', $userId);
+                $statement->execute();
+            } catch (PDOException $e){
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        
+    }
+    
+    public static function activateUser($userId) {
+        $db = Database::getDB();
+            $query = 'UPDATE user 
+                      SET active = 1
+                          WHERE ID = :userId';
+            try{
+                $statement = $db->prepare($query);
+                $statement->bindValue(':userId', $userId);
+                $statement->execute();
+            } catch (PDOException $e){
+                $error_message = $e->getMessage();
+                Database::display_db_error($error_message);
+            }
+        
+    }
+
 }

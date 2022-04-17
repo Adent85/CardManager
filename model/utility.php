@@ -13,8 +13,8 @@
  */
 class utility {
     
-    public static function  getUserIdFromSession(){
-       $userID = 0;
+    public static function  getUserRoleIdFromSession(){
+       $roleID = 0;
        // Look at the session and see if we are
        // 0: Not Logged in
        // 1: End User
@@ -22,11 +22,11 @@ class utility {
       
        // See if we have a session
        if(isset($_SESSION['user'])){
-           $userID = $_SESSION['user']->getID();
+           $roleID = $_SESSION['user']->getUserRoleID();
            // 1: End User, 2: Administroat
           
        }
-       return $userID;     
+       return $roleID;        
    }
    public static function getDeckImage($deckTypeID) {
        $deckImage = null;

@@ -21,9 +21,9 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
               <!-- Container wrapper -->
                 <!-- Navbar brand -->
-                <?php if(utility::getUserIdFromSession() == 0 ){?>
+                <?php if(utility::getUserRoleIdFromSession() == 0 ){?>
                     <a class="navbar-brand me-2" href="user_manager/?controllerRequest=show_home_page"><i class="fas fa-hat-wizard"></i></a>
-                <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
+                <?php }elseif(utility::getUserRoleIdFromSession() > 0 ){?>
                         <a class="navbar-brand me-2" href="user_manager/?controllerRequest=user_home"><i class="fas fa-hat-wizard"></i></a>
                  <?php } ?>
                 <!-- Toggle button -->
@@ -34,11 +34,11 @@
                   <!-- Left links -->
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     
-                  <?php if(utility::getUserIdFromSession() == 0 ){?>
+                  <?php if(utility::getUserRoleIdFromSession() == 0 ){?>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="user_manager/?controllerRequest=show_home_page">Card Manager</a>
                     </li>
-                  <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
+                  <?php }elseif(utility::getUserRoleIdFromSession() > 0 ){?>
                     <li class="nav-item">
                               <a class="nav-link text-white" href="user_manager/?controllerRequest=user_home">Card Manager</a>
                     </li>
@@ -114,7 +114,7 @@
                         </li>
                       </ul>
                     </li>
-                    <?php if (utility::getUserIdFromSession() == 1 ){?>
+                    <?php if (utility::getUserRoleIdFromSession() == 2 ){?>
                         <li class="nav-item dropdown">
                           <a
                             class="nav-link dropdown-toggle text-white"
@@ -128,10 +128,10 @@
                           </a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
                             <li>
-                              <a class="dropdown-item" href="user_manager/?controllerRequest=view_users_admin">View All Users</a>
+                              <a class="dropdown-item" href="user_manager/?controllerRequest=view_user_admin">View All Users</a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="deck_manager/?controllerRequest=view_cards_type_admin">View Cards by Deck Type</a>
+                              <a class="dropdown-item" href="deck_manager/?controllerRequest=view_card_type_admin">View Cards by Deck Type</a>
                             </li>
                           </ul>
                         </li>
@@ -139,7 +139,7 @@
                   <?php } ?>               
                   </ul>
                   <!-- Left links -->
-                  <?php if(utility::getUserIdFromSession() == 0 ){?>
+                  <?php if(utility::getUserRoleIdFromSession() == 0 ){?>
                       <button type="button" class="btn btn-primary" data-mdb-toggle="modal" id= "loginButton" data-mdb-target="#loginModal">Login</button>
                           <!-- Modal -->
                         <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
@@ -232,7 +232,7 @@
                             </div>
                           </div>
                         </div>
-                  <?php }elseif(utility::getUserIdFromSession() > 0 ){?>
+                  <?php }elseif(utility::getUserRoleIdFromSession() > 0 ){?>
                           <div>
                             <a class="nav-link text-white" href="#" data-mdb-toggle="modal" data-mdb-target="#editModal"><i class="bi bi-gear text-white"></i>&nbsp;<?php echo $userName;?></a>
                           </div>
@@ -249,6 +249,7 @@
                                   </div>
                                   <div class="modal-body">
                                     <form class="row g-3" action="user_manager/index.php" method="post">
+                                    <input type="hidden" name="editUserId" value='<?php echo $user->getID();?>'>
                                         <div class="col-md-4">
                                           <div class="form-outline">
                                               <input type="text" class="form-control" name="editFirstName" id= "editFirstName"  value="<?php echo $user->getFirstName();?>" required />
@@ -263,14 +264,14 @@
                                         </div>
                                         <div class="col-md-6">
                                           <div class="form-outline">
-                                            <input type="email" id="editEmail" name="editEmail" class="form-control" value="<?php echo $user->getEmail();?>" required />
-                                            <label class="form-label" for="editEmail">Email</label>
+                                            <input type="email" id="editEmail" name="editEmail" class="form-control" required />
+                                            <label class="form-label" for="editEmail">Verify Email</label>
                                           </div>
                                         </div>
                                         <div class="col-md-6">
                                           <div class="form-outline">
-                                            <input type="password" id="editPassword" name = "editPassword" class="form-control" value="<?php echo $user->getPassword();?>" required />
-                                            <label class="form-label" for="editPassword">Password</label>
+                                            <input type="password" id="editPassword" name = "editPassword" class="form-control" required />
+                                            <label class="form-label" for="editPassword">Verify Password</label>
                                           </div>
                                         </div>
                                         <div class="col-12">

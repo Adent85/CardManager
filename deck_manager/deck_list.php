@@ -37,7 +37,8 @@ Copyright Mar 6, 2022 Kyle Fisk
                     <input type="hidden" name="deck_id" value='<?php echo $user_deck->getID();?>'><button type="submit" class="btn btn-primary">View Cards</button></form></td>
                   <td><form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="edit_deck">
                     <input type="hidden" name="deck_id" value="<?php echo $user_deck->getID();?>"><button type="submit" class="btn btn-primary">Edit Deck</button></form></td>
-                  <td><button type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#deleteDeckModal<?php echo $user_deck->getID();?>">Delete Deck</button><div class="modal fade" id="deleteDeckModal<?php echo $user_deck->getID();?>" tabindex="-1" aria-labelledby="deleteDeckModalLabel" aria-hidden="true">
+                  <td><button type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#deleteDeckModal<?php echo $user_deck->getID();?>">Delete Deck</button>
+                    <div class="modal fade" id="deleteDeckModal<?php echo $user_deck->getID();?>" tabindex="-1" aria-labelledby="deleteDeckModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">

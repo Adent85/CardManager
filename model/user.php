@@ -8,12 +8,14 @@
 
 /**
  * Description of user
- *
+ * The function __construct controls the flow of the code by calling for the correct constructor based on the number of arguments passed into the class allowing for multiple constructors
+ * To use generate a constructor with the desired attributes. Add the number of attributes to the end of the construct function.
+ *  EX. public function __construct3(){} A constructor that takes three arguments and instantiates the object
  * @author Kyle Fisk 
  */
 class user {
     
-    private $id, $firstName, $lastName, $email, $password, $userRoleId, $active;
+    private $id, $firstName, $lastName, $email, $password, $userRoleId, $active, $activeString;
     
     public function __construct()
     {
@@ -25,13 +27,35 @@ class user {
         }
     }
     
+//    public function __construct#($id, $firstName, $lastName, $email, $password, $userRoleId, $active) {
+//        $this->id = $id;
+//        $this->firstName = $firstName;
+//        $this->lastName = $lastName;
+//        $this->email = $email;
+//        $this->password = $password;
+//        $this->userRoleId = $userRoleId;
+//        $this->active = $active;
+//    }use this as a template to instantiate the object with desired variables, remove as needed
+
+    public function __construct3($id, $firstName, $lastName) {
+        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+    }
+    
     public function __construct4($id, $firstName, $lastName, $userRoleId) {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->userRoleId = $userRoleId;
     }
-    
+    public function __construct5($firstName, $lastName, $email, $password, $userRoleId) {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->password = $password;
+        $this->userRoleId = $userRoleId;
+    }
     
     public function __construct6($firstName, $lastName, $email, $password, $userRoleId, $active) {
         $this->firstName = $firstName;
@@ -97,6 +121,22 @@ class user {
     public function setActive($active): void {
         $this->active = $active;
     }
-            
+    
+    public function getActiveString() {
+        return $this->activeString;
+    }
+
+    public function setActiveString($activeString): void {
+        $this->activeString = $activeString;
+    }
+
+    public function activeString(): void{
+        $active= $this->getActive();
+        if($active == 0){
+            $this->setActiveString("Disabled");
+        }else{
+            $this->setActiveString("Active");
+        }
+    }
 }
 
