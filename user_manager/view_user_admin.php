@@ -28,6 +28,7 @@ Copyright Apr 17, 2022 Kyle Fisk
                             <th scope="col">User Name</th>
                             <th scope="col">Active</th>
                             <th scope="col">Edit User</th>
+                            <th scope="col">View User Decks</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,6 +99,13 @@ Copyright Apr 17, 2022 Kyle Fisk
                                     </div>
                                   </div>
                                 </div>
+                            </td>
+                            <td>
+                                <form  action="deck_manager/index.php" method="post">
+                                <input type="hidden" name="controllerRequest" value="view_decks_admin">
+                                <input type="hidden" name="deckUserId" value='<?php echo $user->getID();?>'>
+                                <button class="btn btn-primary" type="submit">View Decks</button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>

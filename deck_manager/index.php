@@ -55,15 +55,34 @@ if($controllerChoice=='create_deck'){
     $deck=deck_db::getDeck(filter_input(INPUT_POST, 'deck_id'));
     require_once 'edit_deck.php';
 }elseif($controllerChoice=='update_deck'){
-    deck_db::updateDeck(filter_input(INPUT_POST, 'deck_id'), filter_input(INPUT_POST, 'deckName'), filter_input(INPUT_POST, 'deckDescription'));
-    $user_decks=deck_db::getUserDecks($user->getID());
-    require_once 'deck_list.php';
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        deck_db::updateDeck(filter_input(INPUT_POST, 'deck_id'), filter_input(INPUT_POST, 'deckName'), filter_input(INPUT_POST, 'deckDescription'));
+        $deck=deck_db::getDeck(filter_input(INPUT_POST, 'deck_id'));
+        $user = user_db::getUserByID($deck->getUserID());
+        $user_decks=deck_db::getUserDecks($user->getID());
+        require_once 'deck_list.php';
+    }else{
+        deck_db::updateDeck(filter_input(INPUT_POST, 'deck_id'), filter_input(INPUT_POST, 'deckName'), filter_input(INPUT_POST, 'deckDescription'));
+        $user_decks=deck_db::getUserDecks($user->getID());
+        require_once 'deck_list.php';
+    }
+    
 }elseif($controllerChoice=='delete_deck'){
-    $deckID = filter_input(INPUT_POST, 'deck_id');
-    deck_db::deleteDeckFromDeckCardTable($deckID);
-    deck_db::deleteDeck($deckID);
-    $user_decks=deck_db::getUserDecks($user->getID());
-    require_once 'deck_list.php';
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $deckID = filter_input(INPUT_POST, 'deck_id');
+        $deck=deck_db::getDeck(filter_input(INPUT_POST, 'deck_id'));
+        deck_db::deleteDeckFromDeckCardTable($deckID);
+        deck_db::deleteDeck($deckID);
+        $user = user_db::getUserByID($deck->getUserID());
+        $user_decks=deck_db::getUserDecks($user->getID());
+        require_once 'deck_list.php';
+    }else{
+        $deckID = filter_input(INPUT_POST, 'deck_id');
+        deck_db::deleteDeckFromDeckCardTable($deckID);
+        deck_db::deleteDeck($deckID);
+        $user_decks=deck_db::getUserDecks($user->getID());
+        require_once 'deck_list.php';
+    }
 }elseif($controllerChoice=='add_card_to_deck'){
     $deckID = filter_input(INPUT_POST, 'deck_id');
     $deck=deck_db::getDeck($deckID);
@@ -88,4 +107,15 @@ if($controllerChoice=='create_deck'){
     $deck=deck_db::getDeck($deckID);
     $cards=deck_db::getCardsInDeck($deckID);
     require_once 'view_deck.php';
+}elseif($controllerChoice=='view_decks_admin'){
+    if(utility::getUserRoleIdFromSession() == 2 ){
+        $userId = filter_input(INPUT_POST, 'deckUserId');
+        $user = user_db::getUserByID($userId);
+        $user_decks=deck_db::getUserDecks($userId);
+        require_once 'admin_deck_list.php';
+    }else{
+        $user = $_SESSION['user'];
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        include 'user_home.php';
+    }
 }
