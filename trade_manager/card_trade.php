@@ -10,7 +10,10 @@ Copyright Apr 3, 2022 Kyle Fisk
       <div class="row">
         <div class="col">
           <?php if($purposed_trade->getTrade_recipient_card() != null){?>
-            <h1 class = "text-center">Desired Card</h1>
+            <div class="card align-items-center" style='background-color: #ADD8E6;'>
+                <h1 class = "text-center p-2">Desired Card</h1>
+            </div>
+            <br>
             <div class="col-lg">
                 <div class="card align-items-center" style='background-color: #ADD8E6;'>
                     <div class="col-lg">
@@ -36,11 +39,14 @@ Copyright Apr 3, 2022 Kyle Fisk
             <br>
             </div>
           <?php }else{?>
-              <h1 class = "text-center">Find Cards To Trade</h1>
+            <div class="card align-items-center" style='background-color: #ADD8E6;'>
+                <h1 class = "text-center p-2">Find Cards To Trade</h1>
+            </div>
+            <br>
               <div class="col-lg">
                   <div class="card align-items-center" style='background-color: #ADD8E6;'>
                         <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="find_card_Initiate_trade">
-                        <button type="submit" class="btn btn-success">Find Cards to Trade</button></form>
+                        <button type="submit" class="btn btn-success m-5">Find Cards to Trade</button></form>
                   </div>
               <br>
               </div>
@@ -48,7 +54,10 @@ Copyright Apr 3, 2022 Kyle Fisk
         </div>
         <div class="col">
             <?php if($purposed_trade->getTrade_initiator_card1() !=null){?>
-              <h1 class = "text-center">Purposed Card</h1>
+            <div class="card align-items-center" style='background-color: #ADD8E6;'>
+                <h1 class = "text-center p-2">Purposed Card</h1>
+            </div>
+            <br>
               <div class="col-lg">
                   <div class="card align-items-center" style='background-color: #ADD8E6;'>
                       <div class="col-lg">
@@ -74,11 +83,14 @@ Copyright Apr 3, 2022 Kyle Fisk
               <br>
               </div>
             <?php }else{?>
-              <h1 class = "text-center">Find Cards To Trade</h1>
+            <div class="card align-items-center" style='background-color: #ADD8E6;'>
+              <h1 class = "text-center p-2">Find Cards To Trade</h1>
+            </div>
+            <br>
               <div class="col-lg">
                   <div class="card align-items-center" style='background-color: #ADD8E6;'>
                         <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="find_card_to_trade">
-                        <button type="submit" class="btn btn-success">Find Cards to Trade</button></form>
+                        <button type="submit" class="btn btn-success m-5">Find Cards to Trade</button></form>
                   </div>
               <br>
               </div>
@@ -86,7 +98,10 @@ Copyright Apr 3, 2022 Kyle Fisk
         </div>
           <div class="col" style="height:100%">
             <?php if($purposed_trade->getTrade_initiator_card2() !=null){?>
-              <h1 class = "text-center">Purposed Card</h1>
+              <div class="card align-items-center" style='background-color: #ADD8E6;'>
+                  <h1 class = "text-center p-2">Purposed Card</h1>
+              </div>
+              <br>
               <div class="col-lg">
                   <div class="card align-items-center" style='background-color: #ADD8E6;'>
                       <div class="col-lg">
@@ -112,11 +127,14 @@ Copyright Apr 3, 2022 Kyle Fisk
               <br>
               </div>
             <?php }if($purposed_trade->getTrade_initiator_card1() !=null && $purposed_trade->getTrade_initiator_card2() == null){?>
-              <h1 class = "text-center">Find Cards To Trade</h1>
+              <div class="card align-items-center" style='background-color: #ADD8E6;'>
+                  <h1 class = "text-center p-2">Find Cards To Trade</h1>
+              </div>
+              <br>
                   <div class="card align-items-center" style='background-color: #ADD8E6;'>
                       <div class="col-lg">
                         <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="find_card2_to_trade">
-                        <button type="submit" class="btn btn-success">Find Cards to Trade</button></form>
+                        <button type="submit" class="btn btn-success m-5">Find Cards to Trade</button></form>
                       </div>
                   </div>
             <?php } ?>

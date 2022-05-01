@@ -5,7 +5,10 @@ Copyright Apr 10, 2022 Kyle Fisk
 -->
 <?php require_once '../view/header.php';?><br>
 <main class="container" style="height: 100%;">
-    <h1 class = "text-center">Card's in <?php echo $deck->getName();?></h1>
+    <div class="card align-items-center" style='background-color: #ADD8E6;'>
+        <h1 class = "text-center p-2">Card's in <?php echo $deck->getName();?></h1>
+    </div>
+    <br>
     <?php foreach ($cards as $card) : ?>
     <div class="col-md">
         <div class="card align-items-center" style='background-color: #ADD8E6;'>

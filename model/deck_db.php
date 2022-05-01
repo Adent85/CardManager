@@ -125,22 +125,6 @@ class deck_db {
         }
     }
     
-    public static function deleteCardFromDeckCardTable($cardID, $deckID){
-        $db = Database::getDB();
-        $query_delete_deck = 'DELETE FROM deck_card
-                              WHERE cardID = :cardID
-                              AND deckID = :deckID';
-        try{
-            $statement = $db->prepare($query_delete_deck);
-            $statement->bindValue(':cardID', $cardID);
-            $statement->bindValue(':deckID', $deckID);
-            $statement->execute();
-        }catch (PDOException $e) {
-            $error_message = $e->getMessage();
-            Database::display_db_error($error_message);
-        }
-    }
-    
     public static function deleteDeck($deckID){
         $db = Database::getDB();
         $query_delete_deck = 'DELETE FROM deck
@@ -295,7 +279,23 @@ class deck_db {
             Database::display_db_error($error_message);
         }
     }
-       
+    
+    public static function deleteCardFromDeck($cardID, $deckID){
+        $db = Database::getDB();
+        $query_delete_deck = 'DELETE FROM deck_card
+                              WHERE cardID = :cardID
+                              AND deckID = :deckID';
+        try{
+            $statement = $db->prepare($query_delete_deck);
+            $statement->bindValue(':cardID', $cardID);
+            $statement->bindValue(':deckID', $deckID);
+            $statement->execute();
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+    
     public static function getCardsInDeck($deckID){
         $db = Database::getDB();
         $query_get_cards = 'SELECT cardID 

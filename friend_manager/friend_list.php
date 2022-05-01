@@ -7,7 +7,7 @@ Copyright Mar 26, 2022 Kyle Fisk
 <main class="container" style="height: 100vh;">
     <div class="card" style='background-color: #ADD8E6;'>
       <div class="card-header">
-          <h1 class='text-center'>Manage Friends</h1>
+          <h1 class='text-center p-2'>Friends</h1>
       </div>
         <div class="card-body">
             <div class="table-responsive">

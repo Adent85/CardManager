@@ -143,11 +143,13 @@ class user_db {
                             JOIN friend_list fl 
                             ON u.ID = fl.user_1_id
                             WHERE fl.user_2_id = :userId
+                            AND active = 1
                             UNION
                             SELECT u.ID, u.firstName, u.lastName FROM user u 
                             JOIN friend_list fl 
                             ON u.ID = fl.user_2_id
-                            WHERE fl.user_1_id = :userId';
+                            WHERE fl.user_1_id = :userId
+                            AND active = 1';
         try{
             $statement = $db->prepare($queryFriendList);
             $statement->bindValue(':userId', $userId);
@@ -204,7 +206,7 @@ class user_db {
         }
                 
     }
-    public static function getFriendRequests($userId){
+    public static function getFriendRequestsIncoming($userId){
         $db = Database::getDB();
         $queryFriendRequest = 'SELECT u.ID, u.firstName, u.lastName FROM friend_request fl
                                JOIN user u
@@ -229,7 +231,7 @@ class user_db {
             Database::display_db_error($error_message);
         }
     }
-
+    
     public static function denyFriendRequest($userId, $senderId) {
         $db = Database::getDB();
         $queryDenyFriendRequest = 'UPDATE friend_request

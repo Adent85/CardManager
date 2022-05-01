@@ -97,7 +97,7 @@ if($controllerChoice=='create_deck'){
 }elseif($controllerChoice=='delete_card'){
     $deckID = filter_input(INPUT_POST, 'deck_id');
     $cardID = filter_input(INPUT_POST, 'card_id');
-    deck_db::deleteCardFromDeckCardTable($cardID, $deckID);
+    deck_db::deleteCardFromDeck($cardID, $deckID);
     $deck=deck_db::getDeck($deckID);
     $cards=deck_db::getCardsInDeck($deckID);
     require_once 'view_deck.php';

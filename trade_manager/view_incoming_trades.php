@@ -131,23 +131,31 @@ Copyright Apr 30, 2022 Kyle Fisk
                             </div>
                           <div class="modal-footer bg-success">
                             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#cancelTradeModal">Cancel Trade</button>
+                                <form action="trade_manager/index.php" method = "post"> 
+                                    <input type="hidden" name="controllerRequest" value="deny_trade">
+                                    <input type="hidden" name="trade_id" value='<?php echo $incoming_trade->getID();?>'>
+                                    <button type="submit" class="btn btn-danger">Deny Trade</button>
+                                </form>
+                            <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#acceptTradeModal">Accept Trade</button>
                           </div>
                         </div>
                       </div>
                     </div>
-                      <div class="modal fade" id="cancelTradeModal" tabindex="-1" aria-labelledby="cancelTradeModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="acceptTradeModal" tabindex="-1" aria-labelledby="acceptTradeModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title text-danger" id="cancelTradeModalLabel">Cancel Trade!!!</h5>
+                                <h5 class="modal-title text-danger" id="acceptTradeModalLabel">Accept Trade!!!</h5>
                                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <div class="modal-body text-danger">Confirm that you want to cancel your purposed trade!</div>
+                              <div class="modal-body text-danger">Confirm that you want to Accept the purposed trade!</div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                                <form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="cancel_trade">
-                                <input type="hidden" name="trade_id" value='<?php echo $incoming_trade->getID();?>'><button type="submit" class="btn btn-danger">Cancel Trade</button></form>
+                                <form action="trade_manager/index.php" method = "post"> 
+                                    <input type="hidden" name="controllerRequest" value="accept_trade">
+                                    <input type="hidden" name="trade_id" value='<?php echo $incoming_trade->getID();?>'>
+                                    <button type="submit" class="btn btn-primary">Accept Trade</button>
+                                </form>
                               </div>
                             </div>
                           </div>

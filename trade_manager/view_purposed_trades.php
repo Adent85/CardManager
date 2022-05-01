@@ -21,6 +21,7 @@ Copyright Apr 25, 2022 Kyle Fisk
               </thead>
               <tbody>
                 <?php foreach ($purposed_trades as $purposed_trade) : ?>
+                <?php $userFriend = user_db::getUserByID($purposed_trade->getTrade_recipient_deck()->getUserID());?>
                 <tr>
                   <th scope="row"><?php echo $purposed_trade->getID();?></th>
                   <td><?php echo $userFriend->getFirstName();?></td>

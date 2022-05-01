@@ -25,9 +25,9 @@ if ($controllerChoice == NULL) {
 }}
 
 if($controllerChoice=='view_users'){
-    $userList = utility::removeSingleVariableFromList(user_db::getActiveUsers(), $user->getID());
+    $userList = utility::removeSingleVariableFromList(user_db::getActiveUsers(), $user->getID());//Removes current user from list
     $currentFriends = user_db::userFriends($user->getID());
-    $users = utility::removeListFromList($userList, $currentFriends);
+    $users = utility::removeListFromList($userList, $currentFriends);//removes users current friends from list
     require_once 'user_list.php';
 }elseif($controllerChoice=='view_friends'){
     $currentFriends = user_db::userFriends($user->getID());
@@ -37,9 +37,9 @@ if($controllerChoice=='view_users'){
     $searchInput = trim($search_input);
     $last_name = (strpos($searchInput, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $searchInput);
     $first_name = trim( preg_replace('#'.preg_quote($last_name,'#').'#', '', $searchInput ) );
-    $userList = utility::removeSingleVariableFromList(user_db::searchUserFriends($first_name, $last_name), $user->getID());
+    $userList = utility::removeSingleVariableFromList(user_db::searchUserFriends($first_name, $last_name), $user->getID());//Removes current user from list
     $currentFriends = user_db::userFriends($user->getID());
-    $users = utility::removeListFromList($userList, $currentFriends);
+    $users = utility::removeListFromList($userList, $currentFriends);//removes users current friends from list
     if($users == null){
         $users = new user();
     }
@@ -50,7 +50,7 @@ if($controllerChoice=='view_users'){
     $currentFriends = user_db::userFriends($user->getID());
     require_once 'friend_list.php';
 }elseif($controllerChoice=='friend_request'){
-    $friendRequests = user_db::getFriendRequests($user->getID());
+    $friendRequests = array_unique(user_db::getFriendRequestsIncoming($user->getID()), SORT_REGULAR);
     require_once 'request_list.php';
 }elseif($controllerChoice=='request_friend'){
     $receiverId = filter_input(INPUT_POST,'receiver_id');
@@ -59,23 +59,23 @@ if($controllerChoice=='view_users'){
 }elseif($controllerChoice=='deny_friend_request'){
         $senderId =filter_input(INPUT_POST, 'request_response');
         user_db::denyFriendRequest($user->getID(), $senderId);
-        $friendRequests = user_db::getFriendRequests($user->getID());
+        $friendRequests = array_unique(user_db::getFriendRequestsIncoming($user->getID()), SORT_REGULAR);
         if($friendRequests == null){
             $currentFriends = user_db::userFriends($user->getID());
             require_once 'friend_list.php';
         }else{
-            $friendRequests = user_db::getFriendRequests($user->getID());
+            $friendRequests = array_unique(user_db::getFriendRequestsIncoming($user->getID()), SORT_REGULAR);
             require_once 'request_list.php';
         }
 }elseif($controllerChoice=='accept_friend_request') {
         $senderId =filter_input(INPUT_POST, 'request_response');
         user_db::acceptFriendRequest($user->getId(), $senderId);
-        $friendRequests = user_db::getFriendRequests($user->getID());
+        $friendRequests = array_unique(user_db::getFriendRequestsIncoming($user->getID()), SORT_REGULAR);
         if($friendRequests == null){
             $currentFriends = user_db::userFriends($user->getID());
             require_once 'friend_list.php';
         }else{
-            $friendRequests = user_db::getFriendRequests($user->getID());
+            $friendRequests = array_unique(user_db::getFriendRequestsIncoming($user->getID()), SORT_REGULAR);
             require_once 'request_list.php';
         }
     

@@ -26,7 +26,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                     rssfeed_scroll_step="6"; 
                     rssfeed_scroll_bar="off"; 
                     rssfeed_target="_blank"; 
-                    rssfeed_font_size="12"; 
+                    rssfeed_font_size="14"; 
                     rssfeed_font_face=""; 
                     rssfeed_border="on"; 
                     rssfeed_css_url=""; 
@@ -40,7 +40,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                     rssfeed_footer_bgcolor="#fff"; 
                     rssfeed_footer_color="#333"; 
                     rssfeed_footer_bgimage=""; 
-                    rssfeed_item_title_length="50"; 
+                    rssfeed_item_title_length="100"; 
                     rssfeed_item_title_color="#fff"; 
                     rssfeed_item_bgcolor="#000"; 
                     rssfeed_item_bgimage=""; 
@@ -48,7 +48,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                     rssfeed_item_source_icon="off"; 
                     rssfeed_item_date="on"; 
                     rssfeed_item_description="on"; 
-                    rssfeed_item_description_length="150"; 
+                    rssfeed_item_description_length="200"; 
                     rssfeed_item_description_color="#55a0ff"; 
                     rssfeed_item_description_link_color="#333"; 
                     rssfeed_item_description_tag="off"; 
@@ -81,7 +81,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                       <div class="tab-pane fade p-2" id="v-pills-friend" role="tabpanel" aria-labelledby="v-pills-friend-tab">
                           <div class="list-group border border-white">
                               <a href="friend_manager/?controllerRequest=view_users" class="list-group-item list-group-item-action text-center">Find Friends</a>
-                              <a href="friend_manager/?controllerRequest=view_friends" class="list-group-item list-group-item-action text-center">Manage Friends</a>
+                              <a href="friend_manager/?controllerRequest=view_friends" class="list-group-item list-group-item-action text-center">View Friends</a>
                               <a href="friend_manager/?controllerRequest=friend_request" class="list-group-item list-group-item-action text-center">View Friend Requests</a>
                           </div>
                       </div>
@@ -116,7 +116,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                         rssfeed_scroll_step="6"; 
                         rssfeed_scroll_bar="off"; 
                         rssfeed_target="_blank"; 
-                        rssfeed_font_size="12"; 
+                        rssfeed_font_size="14"; 
                         rssfeed_font_face=""; 
                         rssfeed_border="on"; 
                         rssfeed_css_url=""; 
@@ -130,7 +130,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                         rssfeed_footer_bgcolor="#fff"; 
                         rssfeed_footer_color="#333"; 
                         rssfeed_footer_bgimage=""; 
-                        rssfeed_item_title_length="50"; 
+                        rssfeed_item_title_length="100"; 
                         rssfeed_item_title_color="#fff"; 
                         rssfeed_item_bgcolor="#000"; 
                         rssfeed_item_bgimage=""; 
@@ -138,7 +138,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                         rssfeed_item_source_icon="off"; 
                         rssfeed_item_date="on"; 
                         rssfeed_item_description="on"; 
-                        rssfeed_item_description_length="150"; 
+                        rssfeed_item_description_length="200"; 
                         rssfeed_item_description_color="#55a0ff"; 
                         rssfeed_item_description_link_color="#333"; 
                         rssfeed_item_description_tag="off"; 

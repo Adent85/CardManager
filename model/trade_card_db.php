@@ -60,7 +60,7 @@ class trade_card_db {
             }
         }
     }
-
+    
     public static function getUserPurposedTrades($userID) {
         $db = Database::getDB();
         $query_purposed_trade = 'SELECT ID, initiator_id, recipient_card_id, recipient_deck_id, 
@@ -94,11 +94,70 @@ class trade_card_db {
             Database::display_db_error($error_message);
         }
     }
-
+    
+    public static function getUserPurposedTrade($tradeID) {
+        $db = Database::getDB();
+        $query_purposed_trade = 'SELECT ID, initiator_id, recipient_card_id, recipient_deck_id, 
+                               initiator_card1_id, initiator_deck1_id, initiator_card2_id, initiator_deck2_id
+                               FROM trade_card
+                               WHERE ID = :tradeID
+                               AND request_status_id = 2';
+        try{
+            $statement = $db->prepare($query_purposed_trade);
+            $statement->bindValue(':tradeID', $tradeID);
+            $statement->execute();
+            $row = $statement->fetch();
+            $purposed_trade = new trade_request($row['ID'],
+                                                card_db::getPokemonCardById($row['recipient_card_id']),
+                                                deck_db::getDeck($row['recipient_deck_id']),
+                                                $row['initiator_id'],
+                                                card_db::getPokemonCardById($row['initiator_card1_id']),
+                                                deck_db::getDeck($row['initiator_deck1_id']),
+                                                $row['initiator_card2_id'],
+                                                $row['initiator_deck2_id']);
+            
+            return $purposed_trade;
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+    
     public static function cancelTrade($tradeID) {
         $db = Database::getDB();
-        $query_delete_trade = 'DELETE FROM trade_card
-                              WHERE ID = :tradeID';
+        $query_delete_trade = 'UPDATE trade_card
+                               SET request_status_id = 4
+                               WHERE ID = :tradeID';
+        try{
+            $statement = $db->prepare($query_delete_trade);
+            $statement->bindValue(':tradeID', $tradeID);
+            $statement->execute();
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+    
+    public static function denyTrade($tradeID) {
+        $db = Database::getDB();
+        $query_delete_trade = 'UPDATE trade_card
+                               SET request_status_id = 3
+                               WHERE ID = :tradeID';
+        try{
+            $statement = $db->prepare($query_delete_trade);
+            $statement->bindValue(':tradeID', $tradeID);
+            $statement->execute();
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
+    
+    public static function acceptTrade($tradeID) {
+        $db = Database::getDB();
+        $query_delete_trade = 'UPDATE trade_card
+                               SET request_status_id = 2
+                               WHERE ID = :tradeID';
         try{
             $statement = $db->prepare($query_delete_trade);
             $statement->bindValue(':tradeID', $tradeID);
