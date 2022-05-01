@@ -107,7 +107,7 @@
                           <a class="dropdown-item" href="trade_manager/?controllerRequest=view_purposed_trades">View Purposed Trades</a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="trade_manager/?controllerRequest=Vvew_incoming_trades">View Incoming Trades</a>
+                          <a class="dropdown-item" href="trade_manager/?controllerRequest=view_incoming_trades">View Incoming Trades</a>
                         </li>
                         <li>
                           <a class="dropdown-item" href="#"></a>

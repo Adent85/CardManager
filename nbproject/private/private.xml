@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>user_manager/user_home.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>105</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/trade_card_db.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/card_db.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/index.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/deck_manager/index.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/deck_manager/add_card.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/style/main.css</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/js/main.js</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/trade_request.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/model/deck_db.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/user_manager/user_home.php</file>
+            <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/view/header.php</file>
             <file>file:/C:/xampp/htdocs/projects/CardManager-Git-Hub/Cloned-Repo/CardManager/trade_manager/index.php</file>
         </group>
     </open-files>

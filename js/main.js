@@ -4,17 +4,23 @@
  * 
  */
 (function(){
-//    $('[data-toggle="popover"]').popover({
-//    });  
-   $("#home_index_h1").animate({
-       fontSize:"275%", opacity: 1, left:0 },
-       2000,
-       function(){
-           $("#home_index_h1").next().fadeIn(1000).fadeOut(1000);
-       }
-   ); 
-    
-});
+ 'use strict';
+
+$("#home_index_h1").animate({
+   fontSize:"275%", opacity: 1, left:0 },
+   2000,
+   function(){
+       $("#home_index_h1").next().fadeIn(1000).fadeOut(1000);
+   }
+);
+   
+//$('#myModal').on('show.bs.modal', function(event) {
+//  var button = $(event.relatedTarget); // Button that triggered the modal
+//  var image = button.data('image');
+//  var modal = $(this);
+//  modal.find('#image').attr('src', image);
+//});
+//});
 //(function () {
 //  'use strict'
 //
@@ -33,5 +39,5 @@
 //        form.classList.add('was-validated')
 //      }, false)
 //    })
-//})()
+});
 

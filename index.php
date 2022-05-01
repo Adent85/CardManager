@@ -2,6 +2,7 @@
 Copyright Jan 28, 2022 Kyle Fisk
 -->
 <?php if (isset($_SESSION['user'])) {$user=$_SESSION['user'];$userName= $user->getFirstName()." ".$user->getLastName();} else {$userName='';}?>
+<?php if (empty($error_message)){$error_message="";}?>
 <?php if(filter_input(INPUT_COOKIE, 'email') != false && filter_input(INPUT_COOKIE, 'password') != false){
     $email = filter_input(INPUT_COOKIE, 'email');
     $password = filter_input(INPUT_COOKIE, 'password');
@@ -15,8 +16,9 @@ Copyright Jan 28, 2022 Kyle Fisk
 <?php require_once 'view/header.php';?><br>
 <main class="container" style="height: 100vh;">
     <div class="border border-white rounded-pill text-center" style='background-color: #ADD8E6;'>
-        <h1 id="home_index_h1">Welcome!</h1>
-        <p class="p-1">Please log in to access your account or register a new account to start building your collection.</p>
+        <p class="p-1 text-danger"><i><?php echo $error_message?></i></p>
+        <h1>Welcome!</h1>
+        <h4 class="p-3">Please log in to access your account or register a new account to start building your collection.</h4>
     </div>
     <div class="container">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-mdb-ride="carousel">

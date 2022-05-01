@@ -41,10 +41,8 @@ if($controllerChoice=='create_deck'){
     $deckName = filter_input(INPUT_POST, 'deckName');
     $deckDescription = filter_input(INPUT_POST, 'deckDescription');
     $deckTypeID = filter_input(INPUT_POST, 'selectedDeckTypeID');
-    $deckImage = utility::getDeckImage($deckTypeID);
-    $totalCards = 0;
     $active = 1;
-    $deck = new Deck($userID, $deckName, $deckDescription, $deckImage, $deckTypeID, $totalCards, $active);
+    $deck = new Deck($userID, $deckName, $deckDescription, $deckTypeID, $active);
     deck_db::createNewDeck($deck);
     $user_decks=deck_db::getUserDecks($user->getID());
     require_once 'deck_list.php';
@@ -84,9 +82,10 @@ if($controllerChoice=='create_deck'){
         require_once 'deck_list.php';
     }
 }elseif($controllerChoice=='add_card_to_deck'){
+    $pageNumber = 1;
     $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::getAllPokemonCards($pageNumber);
     $deck=deck_db::getDeck($deckID);
-    $cards= deck_db::getCardsByDeckType($deck->getDeckTypeID());
     require_once 'add_card.php';
 }elseif($controllerChoice=='add_card'){
     $deckID = filter_input(INPUT_POST, 'deck_id');
@@ -98,7 +97,7 @@ if($controllerChoice=='create_deck'){
 }elseif($controllerChoice=='delete_card'){
     $deckID = filter_input(INPUT_POST, 'deck_id');
     $cardID = filter_input(INPUT_POST, 'card_id');
-    deck_db::deleteCardFromDeckCardTable($cardID);
+    deck_db::deleteCardFromDeckCardTable($cardID, $deckID);
     $deck=deck_db::getDeck($deckID);
     $cards=deck_db::getCardsInDeck($deckID);
     require_once 'view_deck.php';
@@ -118,4 +117,23 @@ if($controllerChoice=='create_deck'){
         $userName= $user->getFirstName()." ".$user->getLastName();
         include 'user_home.php';
     }
+    
+}elseif($controllerChoice=='previous_page'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::getAllPokemonCards($pageNumber);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}elseif($controllerChoice=='to_page'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::getAllPokemonCards($pageNumber);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}elseif($controllerChoice=='next_page'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::getAllPokemonCards($pageNumber);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
 }

@@ -13,15 +13,13 @@
  */
 class deck {
     
-    private $ID, $userID, $name, $description, $deckImage, $deckTypeID, $totalCards, $active;
+    private $ID, $userID, $name, $description, $deckTypeID, $active;
     
-    public function __construct($userID, $name, $description, $deckImage, $deckTypeID, $totalCards, $active) {
+    public function __construct($userID, $name, $description, $deckTypeID, $active) {
         $this->userID = $userID;
         $this->name = $name;
         $this->description = $description;
-        $this->deckImage = $deckImage;
         $this->deckTypeID = $deckTypeID;
-        $this->totalCards = $totalCards;
         $this->active = $active;
     }
 
@@ -41,16 +39,8 @@ class deck {
         return $this->description;
     }
 
-    public function getDeckImage() {
-        return $this->deckImage;
-    }
-
     public function getDeckTypeID() {
         return $this->deckTypeID;
-    }
-
-    public function getTotalCards() {
-        return $this->totalCards;
     }
 
     public function getActive() {
@@ -73,16 +63,8 @@ class deck {
         $this->description = $description;
     }
 
-    public function setDeckImage($deckImage): void {
-        $this->deckImage = $deckImage;
-    }
-
     public function setDeckTypeID($deckTypeID): void {
         $this->deckTypeID = $deckTypeID;
-    }
-
-    public function setTotalCards($totalCards): void {
-        $this->totalCards = $totalCards;
     }
 
     public function setActive($active): void {

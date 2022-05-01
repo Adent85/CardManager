@@ -28,14 +28,6 @@ class utility {
        }
        return $roleID;        
    }
-   public static function getDeckImage($deckTypeID) {
-       $deckImage = null;
-       
-       if($deckTypeID == 1){
-           $deckImage = "pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg_dah43cy-fullview";
-       }
-       return $deckImage;
-   }
    
    public static function createEmailCookie(){
         $name = 'email';
@@ -44,6 +36,7 @@ class utility {
         $path = '/';
         setcookie($name,$value,$expire,$path);
     }
+    
     public static function createPasswordCookie(){
         $name = 'password';
         $value = filter_input(INPUT_POST, 'inputPassword');
@@ -59,5 +52,25 @@ class utility {
         $path = '/';
         setcookie($name,$value,$expire,$path);
     }
+    
+    public static function removeSingleVariableFromList($mainList, $variableToRemoveFromList) {
+        foreach ($mainList as $mL => $val){
+        if($val->getId()==$variableToRemoveFromList){
+            unset($mainList[$mL]);
+        } 
+        return $mainList;
+        }   
+    }
 
+    public static function removeListFromList($mainList, $filterList) {
+        
+        foreach ($mainList as $mL => $val){
+            foreach ($filterList as $fL){
+                if($val->getId()==$fL->getID()){
+                    unset($mainList[$mL]);
+                }
+            }
+        }
+        return$mainList;
+    }
 }

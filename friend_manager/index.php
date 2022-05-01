@@ -25,20 +25,9 @@ if ($controllerChoice == NULL) {
 }}
 
 if($controllerChoice=='view_users'){
-    $users = user_db::getActiveUsers();
+    $userList = utility::removeSingleVariableFromList(user_db::getActiveUsers(), $user->getID());
     $currentFriends = user_db::userFriends($user->getID());
-    foreach ($users as $u => $val){
-        if($val->getId()==$user->getID()){
-            unset($users[$u]);
-        }
-    }
-    foreach ($users as $u => $val){
-        foreach ($currentFriends as $cf){
-            if($val->getId()==$cf->getID()){
-                unset($users[$u]);
-            }
-        }
-    }
+    $users = utility::removeListFromList($userList, $currentFriends);
     require_once 'user_list.php';
 }elseif($controllerChoice=='view_friends'){
     $currentFriends = user_db::userFriends($user->getID());
@@ -48,7 +37,12 @@ if($controllerChoice=='view_users'){
     $searchInput = trim($search_input);
     $last_name = (strpos($searchInput, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $searchInput);
     $first_name = trim( preg_replace('#'.preg_quote($last_name,'#').'#', '', $searchInput ) );
-    $users = user_db::searchUserFriends($first_name, $last_name);
+    $userList = utility::removeSingleVariableFromList(user_db::searchUserFriends($first_name, $last_name), $user->getID());
+    $currentFriends = user_db::userFriends($user->getID());
+    $users = utility::removeListFromList($userList, $currentFriends);
+    if($users == null){
+        $users = new user();
+    }
     require_once 'user_list.php';
 }elseif($controllerChoice=='remove_friend'){
     $friendId = filter_input(INPUT_POST, 'friend_id');

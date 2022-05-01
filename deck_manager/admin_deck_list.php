@@ -18,7 +18,6 @@ Copyright Apr 17, 2022 Kyle Fisk
                   <th scope="col">ID</th>
                   <th scope="col">Name</th>
                   <th scope="col">Description</th>
-                  <th scope="col">Total Cards</th>
                   <th scope="col">Add Cards</th>
                   <th scope="col">View Cards</th>
                   <th scope="col">Edit Deck</th>
@@ -31,7 +30,6 @@ Copyright Apr 17, 2022 Kyle Fisk
                   <th scope="row"><?php echo $user_deck->getID();?></th>
                   <td><?php echo $user_deck->getName();?></td>
                   <td><?php echo $user_deck->getDescription();?></td>
-                  <td><?php echo $user_deck->getTotalCards();?></td>
                   <td><form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="add_card_to_deck">
                     <input type="hidden" name="deck_id" value='<?php echo $user_deck->getID();?>'><button type="submit" class="btn btn-primary">Add Card</button></form></td>
                   <td><form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_deck">

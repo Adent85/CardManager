@@ -15,8 +15,7 @@ class card_attribute {
     
     private $ID, $name, $description, $value;
     
-    public function __construct($ID, $name, $description, $value) {
-        $this->ID = $ID;
+    public function __construct($name, $description, $value) {
         $this->name = $name;
         $this->description = $description;
         $this->value = $value;

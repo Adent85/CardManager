@@ -17,7 +17,6 @@ Copyright Apr 2, 2022 Kyle Fisk
                       <th scope="col">ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Total Cards</th>
                       <th scope="col">View Cards</th>
                     </tr>
                   </thead>
@@ -27,7 +26,6 @@ Copyright Apr 2, 2022 Kyle Fisk
                       <th scope="row"><?php echo $friend_deck->getID();?></th>
                       <td><?php echo $friend_deck->getName();?></td>
                       <td><?php echo $friend_deck->getDescription();?></td>
-                      <td><?php echo $friend_deck->getTotalCards();?></td>
                       <td><form action="trade_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="view_friend_deck">
                         <input type="hidden" name="friend_deck_id" value='<?php echo $friend_deck->getID();?>'><button type="submit" class="btn btn-primary">View Cards</button></form></td>
                     <?php endforeach; ?>

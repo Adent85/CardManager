@@ -16,11 +16,14 @@ session_set_cookie_params($lifetime, '/');
 session_start();
 
 if (isset($_SESSION['user']) && $_SESSION['user']==true  ) { 
- $user=$_SESSION['user'];
- $userName= $user->getFirstName()." ".$user->getLastName();
- $loggedin = true;
+    if($_SESSION['user']==null){
+        $_SESSION=array();
+    }else{
+    $user=$_SESSION['user'];
+    $userName= $user->getFirstName()." ".$user->getLastName();
+    }
+ 
 }
-
 if(filter_input(INPUT_COOKIE, 'email') != false && filter_input(INPUT_COOKIE, 'password') != false){
     $email = filter_input(INPUT_COOKIE, 'email');
     $password = filter_input(INPUT_COOKIE, 'password');
@@ -36,6 +39,7 @@ if ($controllerChoice == NULL) {
 }}
 
 if ($controllerChoice=='show_home_page') {
+    $error_message = "";
     require_once '../index.php';
 }elseif ($controllerChoice=='register_user') {
     $firstName= filter_input(INPUT_POST, 'inputFirstName');
@@ -46,35 +50,44 @@ if ($controllerChoice=='show_home_page') {
     $user = new User(ucfirst(strtolower($firstName)), ucfirst(strtolower($lastName)), $email, $password, $userRoleId);
     $ID=user_db::insertUserData($user);
     if($ID > 0){
-    $success_message = 'Your record was sucessfully inserted';
     $user->setId($ID);
     $user=user_db::userLogin($email,$password);
     $_SESSION['user'] = $user;
     $userName= $user->getFirstName()." ".$user->getLastName();
     include 'user_home.php';
-    } 
+    }else{
+        $error_message = "An error occured while trying to register your new account.<br>Please try again.";
+        require_once '../index.php';
+    }
 }elseif ($controllerChoice=='user_login') {
     $email=filter_input(INPUT_POST, 'inputEmail', FILTER_VALIDATE_EMAIL);
     $password=filter_input(INPUT_POST, 'inputPassword');  
     $user=user_db::userLogin($email,$password);
     $remember = filter_input(INPUT_POST, 'rememberInput');
-    if(!empty($remember)){
-        utility::createEmailCookie();
-        utility::createPasswordCookie();
-        utility::createRememberCookie();
+    if($user != false){
+        if(!empty($remember)){
+            utility::createEmailCookie();
+            utility::createPasswordCookie();
+            utility::createRememberCookie();
+        }else{
+            $expire = strtotime('-1 year');
+            setcookie('email', '', $expire, '/');
+            setcookie('password', '', $expire, '/');
+            setcookie('remember', '', $expire, '/');
+        }
+        $_SESSION['user'] = $user;
+        $userName= $user->getFirstName()." ".$user->getLastName();
+        require_once 'user_home.php';
     }else{
-        $expire = strtotime('-1 year');
-        setcookie('email', '', $expire, '/');
-        setcookie('password', '', $expire, '/');
-        setcookie('remember', '', $expire, '/');
+        $error_message = "Login error please check your credetials and try again";
+        require_once '../index.php';
     }
-    $_SESSION['user'] = $user;
-    $userName= $user->getFirstName()." ".$user->getLastName();
-    require_once 'user_home.php';
+    
+    
 }else if($controllerChoice=='user_logout'){   
     $_SESSION = array();
     session_destroy();
-    $loggedin= false;
+    $error_message = "You have sucessfully been logged out";
     require_once '../index.php';
 }elseif ($controllerChoice=='edit_user') {
     if(utility::getUserRoleIdFromSession() == 2 ){

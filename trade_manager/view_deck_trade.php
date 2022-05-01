@@ -16,7 +16,10 @@ Copyright Apr 10, 2022 Kyle Fisk
                         <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
                             <div class="d-flex flex-column justify-content-center align-items-center h-100">
                                 <h2 class="text-white mb-0">Attributes</h2><br />
-                                <p class="text-white mb-0">php code for card attributes</p><br >
+                                <p class="text-white mb-0">HP: <?php echo $card->getHp();?></p>
+                                <p class="text-white mb-0">Attack: <?php echo $card->getAttribute1()->getName();?></p>
+                                <p class="text-white mb-0 p-2"><?php echo $card->getAttribute1()->getDescription();?></p>
+                                <p class="text-white mb-0">Attack Damage: <?php echo $card->getAttribute1()->getValue();?></p>
                             </div>
                         </div>
                 </div>
