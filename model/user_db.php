@@ -284,8 +284,8 @@ class user_db {
         $db = Database::getDB();
         if($last_name != null){
             $queryUser = 'SELECT ID, firstName , lastName, active FROM user
-                          WHERE firstName like :first_name
-                          AND lastName like :last_name';
+                          WHERE firstName LIKE :first_name
+                          AND lastName LIKE :last_name';
             try{
                 $statement = $db->prepare($queryUser);
                 $statement->bindValue(':first_name', '%'.$first_name.'%');
@@ -309,7 +309,7 @@ class user_db {
             }
         }else{
             $queryUser = 'SELECT ID, firstName , lastName, active FROM user
-              WHERE firstName like :first_name';
+              WHERE firstName LIKE :first_name';
             try{
                 $statement = $db->prepare($queryUser);
                 $statement->bindValue(':first_name', '%'.$first_name.'%');

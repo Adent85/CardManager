@@ -5,9 +5,22 @@ Copyright Mar 12, 2022 Kyle Fisk
 -->
 <?php require_once '../view/header.php';?><br>
 <main class="container" style="height: 100%;">
-    <div class="card align-items-center">
-        <h1 class = "text-center p-2">Add card to <?php echo $deck->getName();?></h1>
+    <div class="card align-items-center" style='background-color: #ADD8E6;'>
+        <div class="card-header">
+            <h1 class = "text-center p-2">Add card to <?php echo $deck->getName();?></h1>
+            <div class="d-flex justify-content-center mb-2">
+                <form action="deck_manager/index.php" method="post">
+                    <div class="form-outline mb-4">
+                        <input type="text" id="search_name" name="search_name" class="form-control bg-white" required/>
+                        <label class="form-label" for="search_name">Card Search:</label>
+                    </div>
+                    <input type="hidden" name="controllerRequest" value="search_cards">
+                    <button type="submit" class="btn btn-primary btn-block">Search</button>
+                </form>
+            </div>
+        </div>
     </div>
+    
     <br>
     <?php foreach ($pokemonCards as $card) : ?>
     <div>
@@ -52,39 +65,80 @@ Copyright Mar 12, 2022 Kyle Fisk
                 </form>
             </li>
             <?php } ?>
-            <?php if($pageNumber >=2 ){?>
-            <li class="page-item">
-                <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
-                    <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
-                    <input type="hidden" name="page_number" value='<?php echo $pageNumber-1;?>'>
-                    <button type="submit" class="page-link"><?php echo $pageNumber-1;?></button>
-                </form>
-            </li>
-            <?php } ?>
-            <li class="page-item active">
-                <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
-                    <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
-                    <input type="hidden" name="page_number" value='<?php echo $pageNumber;?>'>
-                    <button type="submit" class="page-link"><?php echo $pageNumber;?></button>
-                </form>
-            </li>
-            <?php if($pageNumber <=24 ){?>
-            <li class="page-item">
-                <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
-                    <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
-                    <input type="hidden" name="page_number" value='<?php echo $pageNumber+2;?>'>
-                    <button type="submit" class="page-link"><?php echo $pageNumber+1;?></button>
-                </form>
-            </li>
-            <?php } ?>
-            <?php if($pageNumber <25 ){?>
-            <li class="page-item">
-                <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="next_page">
-                    <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
-                    <input type="hidden" name="page_number" value='<?php echo $pageNumber+1;?>'>
-                    <button type="submit" class="page-link">Next</button>
-                </form>
-            </li>
+            <?php if($search_name == null){?>
+                <?php if($pageNumber >=2 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber-1;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber-1;?></button>
+                    </form>
+                </li>
+                <?php } ?>
+                <li class="page-item active">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber;?></button>
+                    </form>
+                </li>
+                <?php if($pageNumber <=24 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber+1;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber+1;?></button>
+                    </form>
+                </li>
+                <?php } ?>
+                <?php if($pageNumber <25 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="next_page">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber+1;?>'>
+                        <button type="submit" class="page-link">Next</button>
+                    </form>
+                </li>
+                <?php } ?>
+            <?php }else{?>
+                <?php if($pageNumber >=2 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page_search">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber-1;?>'>
+                        <input type="hidden" name="search_name" value='<?php echo $search_name;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber-1;?></button>
+                    </form>
+                </li>
+                <?php } ?>
+                <li class="page-item active">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page_search">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber;?>'>
+                        <input type="hidden" name="search_name" value='<?php echo $search_name;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber;?></button>
+                    </form>
+                </li>
+                <?php if($pageNumber <=24 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="to_page_search">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber+1;?>'>
+                        <input type="hidden" name="search_name" value='<?php echo $search_name;?>'>
+                        <button type="submit" class="page-link"><?php echo $pageNumber+1;?></button>
+                    </form>
+                </li>
+                <?php } ?>
+                <?php if($pageNumber <25 ){?>
+                <li class="page-item">
+                    <form action="deck_manager/index.php" method = "post"> <input type="hidden" name="controllerRequest" value="next_page_search">
+                        <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
+                        <input type="hidden" name="page_number" value='<?php echo $pageNumber+1;?>'>
+                        <input type="hidden" name="search_name" value='<?php echo $search_name;?>'>
+                        <button type="submit" class="page-link">Next</button>
+                    </form>
+                </li>
+                <?php } ?>
             <?php } ?>
           </ul>
         </nav>

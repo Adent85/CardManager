@@ -14,15 +14,14 @@
  * @author Kyle Fisk 
  */
 class trade_request {
-    
-    private  $ID, $trade_recipient_card, $trade_recipient_deck, $trade_initiator_id, $trade_initiator_card1, $trade_initiator_card2, $trade_initiator_deck1, $trade_initiator_deck2;
-    
-    public function __construct()
-    {
+
+    private $ID, $trade_recipient_card, $trade_recipient_deck, $trade_initiator_id, $trade_initiator_card1, $trade_initiator_card2, $trade_initiator_deck1, $trade_initiator_deck2, $requestId;
+
+    public function __construct() {
         $arguments = func_get_args();
         $numberOfArguments = func_num_args();
 
-        if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+        if (method_exists($this, $function = '__construct' . $numberOfArguments)) {
             call_user_func_array(array($this, $function), $arguments);
         }
     }
@@ -43,18 +42,30 @@ class trade_request {
         $this->trade_recipient_deck = $trade_recipient_deck;
         $this->trade_initiator_id = $trade_initiator_id;
     }
-    
+
     public function __construct8($ID, $trade_recipient_card, $trade_recipient_deck, $trade_initiator_id, $trade_initiator_card1, $trade_initiator_deck1, $trade_initiator_card2, $trade_initiator_deck2) {
-    $this->ID = $ID;
-    $this->trade_recipient_card = $trade_recipient_card;
-    $this->trade_recipient_deck = $trade_recipient_deck;
-    $this->trade_initiator_id = $trade_initiator_id;
-    $this->trade_initiator_card1 = $trade_initiator_card1;
-    $this->trade_initiator_card2 = $trade_initiator_card2;
-    $this->trade_initiator_deck1 = $trade_initiator_deck1;
-    $this->trade_initiator_deck2 = $trade_initiator_deck2;
+        $this->ID = $ID;
+        $this->trade_recipient_card = $trade_recipient_card;
+        $this->trade_recipient_deck = $trade_recipient_deck;
+        $this->trade_initiator_id = $trade_initiator_id;
+        $this->trade_initiator_card1 = $trade_initiator_card1;
+        $this->trade_initiator_card2 = $trade_initiator_card2;
+        $this->trade_initiator_deck1 = $trade_initiator_deck1;
+        $this->trade_initiator_deck2 = $trade_initiator_deck2;
     }
-    
+
+    public function __construct9($ID, $trade_recipient_card, $trade_recipient_deck, $trade_initiator_id, $trade_initiator_card1, $trade_initiator_deck1, $trade_initiator_card2, $trade_initiator_deck2, $requestId) {
+        $this->ID = $ID;
+        $this->trade_recipient_card = $trade_recipient_card;
+        $this->trade_recipient_deck = $trade_recipient_deck;
+        $this->trade_initiator_id = $trade_initiator_id;
+        $this->trade_initiator_card1 = $trade_initiator_card1;
+        $this->trade_initiator_card2 = $trade_initiator_card2;
+        $this->trade_initiator_deck1 = $trade_initiator_deck1;
+        $this->trade_initiator_deck2 = $trade_initiator_deck2;
+        $this->requestId = $requestId;
+    }
+
     public function getID() {
         return $this->ID;
     }
@@ -87,6 +98,10 @@ class trade_request {
         return $this->trade_initiator_deck2;
     }
 
+    public function getRequestId() {
+        return $this->requestId;
+    }
+
     public function setID($ID): void {
         $this->ID = $ID;
     }
@@ -117,6 +132,10 @@ class trade_request {
 
     public function setTrade_initiator_deck2($trade_initiator_deck2): void {
         $this->trade_initiator_deck2 = $trade_initiator_deck2;
+    }
+
+    public function setRequestId($requestId): void {
+        $this->requestId = $requestId;
     }
 
 

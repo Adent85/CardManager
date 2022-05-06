@@ -202,5 +202,75 @@ class trade_card_db {
         }
     
     }
+    
+    public static function getUserTradeHistory($userID) {
+        $db = Database::getDB();
+        $query_trade_history = 'SELECT ID, initiator_id, recipient_card_id, recipient_deck_id, 
+                               initiator_card1_id, initiator_deck1_id, initiator_card2_id, 
+                               initiator_deck2_id, request_status_id
+                               FROM trade_card
+                               WHERE recipient_id = :userID
+                               OR initiator_id = :userID';
+        try{
+            $statement = $db->prepare($query_trade_history);
+            $statement->bindValue(':userID', $userID);
+            $statement->execute();
+            
+            $trade_history = array();
+            
+            foreach ($statement as $row){
+                $trade = new trade_request($row['ID'],
+                                              card_db::getPokemonCardById($row['recipient_card_id']),
+                                              deck_db::getDeck($row['recipient_deck_id']),
+                                              $row['initiator_id'],
+                                              card_db::getPokemonCardById($row['initiator_card1_id']),
+                                              deck_db::getDeck($row['initiator_deck1_id']),
+                                              $row['initiator_card2_id'],
+                                              $row['initiator_deck2_id'],
+                                              $row['request_status_id']);
+                
+                $trade_history[]=$trade;
+            }
+            
+            return $trade_history;
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    
+    }
+
+    public static function getTradeHistory() {
+        $db = Database::getDB();
+        $query_trade_history = 'SELECT ID, initiator_id, recipient_card_id, recipient_deck_id, 
+                               initiator_card1_id, initiator_deck1_id, initiator_card2_id, 
+                               initiator_deck2_id, request_status_id
+                               FROM trade_card';
+        try{
+            $statement = $db->prepare($query_trade_history);
+            $statement->execute();
+            
+            $incoming_trades = array();
+            
+            foreach ($statement as $row){
+                $incoming_trade = new trade_request($row['ID'],
+                                              card_db::getPokemonCardById($row['recipient_card_id']),
+                                              deck_db::getDeck($row['recipient_deck_id']),
+                                              $row['initiator_id'],
+                                              card_db::getPokemonCardById($row['initiator_card1_id']),
+                                              deck_db::getDeck($row['initiator_deck1_id']),
+                                              $row['initiator_card2_id'],
+                                              $row['initiator_deck2_id'],
+                                              $row['request_status_id']);
+                
+                $incoming_trades[]=$incoming_trade;
+            }
+            
+            return $incoming_trades;
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            Database::display_db_error($error_message);
+        }
+    }
 
 }

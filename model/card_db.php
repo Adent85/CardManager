@@ -63,5 +63,31 @@ class card_db {
         
         return $card;
     }
-    
+
+    public static function searchPokemonCardsByName($pageNumber, $search_name) {
+        $ch = Database::pokemonApiCall();
+        
+        curl_setopt($ch, CURLOPT_URL, 'https://api.pokemontcg.io/v2/cards?page='.$pageNumber.'&pageSize=10&q=name:'.$search_name.'*');
+        $allCards = curl_exec($ch); 
+        curl_close($ch);
+        $arr = json_decode($allCards, true);
+        
+        $pokemonCards = array();
+        
+        foreach ($arr['data'] as $c){
+            if(empty($c['attacks'])){
+                $card = new card($c['id'], $c['name'] , 1, $c['hp'], new card_attribute('None', 'None', 'None'), $c['images']['small']);
+            }else{
+                $card = new card($c['id'], $c['name'] , 1, $c['hp'],
+                    new card_attribute($c['attacks'][0]['name'], $c['attacks'][0]['text'], 
+                    $c['attacks'][0]['damage']), $c['images']['small']);
+            }
+            
+            
+            $pokemonCards[] = $card;
+        }
+        
+        return $pokemonCards;
+    }
+
 }

@@ -30,7 +30,8 @@ if($controllerChoice=='view_users'){
     $users = utility::removeListFromList($userList, $currentFriends);//removes users current friends from list
     require_once 'user_list.php';
 }elseif($controllerChoice=='view_friends'){
-    $currentFriends = user_db::userFriends($user->getID());
+    $friends = user_db::userFriends($user->getID());
+    $currentFriends = utility::removeSingleVariableFromList($friends, $user->getID());//Removes current user from list
     require_once 'friend_list.php';
 }elseif($controllerChoice=='search_user_list'){
     $search_input = filter_input(INPUT_POST, 'search_name');

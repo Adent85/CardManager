@@ -110,7 +110,7 @@
                           <a class="dropdown-item" href="trade_manager/?controllerRequest=view_incoming_trades">View Incoming Trades</a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#"></a>
+                          <a class="dropdown-item" href="trade_manager/?controllerRequest=view_trade_history">View Trade History</a>
                         </li>
                       </ul>
                     </li>
@@ -131,7 +131,7 @@
                               <a class="dropdown-item" href="user_manager/?controllerRequest=view_user_admin">View All Users</a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="deck_manager/?controllerRequest=view_card_type_admin">View Cards by Deck Type</a>
+                              <a class="dropdown-item" href="trade_manager/?controllerRequest=view_trades_admin">View All Trades</a>
                             </li>
                           </ul>
                         </li>

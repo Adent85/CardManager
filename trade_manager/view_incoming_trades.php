@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!--
 
 Copyright Apr 30, 2022 Kyle Fisk
@@ -22,6 +21,7 @@ Copyright Apr 30, 2022 Kyle Fisk
               </thead>
               <tbody>
                 <?php foreach ($incoming_trades as $incoming_trade) : ?>
+                <?php $userFriend = user_db::getUserByID($incoming_trade->getTrade_initiator_id());?>
                 <tr>
                   <th scope="row"><?php echo $incoming_trade->getID();?></th>
                   <td><?php echo $userFriend->getFirstName();?></td>

@@ -82,7 +82,6 @@ if ($controllerChoice=='view_decks_for_trade') {
     trade_card_db::createNewTrade($purposed_trade);
     $purposed_trades = array_unique(trade_card_db::getUserPurposedTrades($user->getID()), SORT_REGULAR);
     foreach($purposed_trades as $pt){
-        $userFriend = user_db::getUserByID($pt->getTrade_recipient_deck()->getUserID());
         if($pt->getTrade_initiator_card2()!=null){
             $pt->setTrade_initiator_card2(card_db::getPokemonCardById($pt->getTrade_initiator_card2()));
             $pt->setTrade_initiator_deck2(deck_db::getDeck($pt->getTrade_initiator_deck2()));
@@ -101,7 +100,6 @@ if ($controllerChoice=='view_decks_for_trade') {
 }elseif($controllerChoice == 'view_incoming_trades'){
     $incoming_trades = array_unique(trade_card_db::getUserIncomingTrades($user->getID()), SORT_REGULAR);
     foreach($incoming_trades as $it){
-        $userFriend = user_db::getUserByID($it->getTrade_initiator_id());
         if($it->getTrade_initiator_card2()!=null){
             $it->setTrade_initiator_card2(card_db::getPokemonCardById($it->getTrade_initiator_card2()));
             $it->setTrade_initiator_deck2(deck_db::getDeck($it->getTrade_initiator_deck2()));
@@ -113,7 +111,6 @@ if ($controllerChoice=='view_decks_for_trade') {
     trade_card_db::cancelTrade($tradeID);
     $purposed_trades = array_unique(trade_card_db::getUserPurposedTrades($user->getID()), SORT_REGULAR);
     foreach($purposed_trades as $pt){
-        $userFriend = user_db::getUserByID($pt->getTrade_recipient_deck()->getUserID());
         if($pt->getTrade_initiator_card2()!=null){
             $pt->setTrade_initiator_card2(card_db::getPokemonCardById($pt->getTrade_initiator_card2()));
             $pt->setTrade_initiator_deck2(deck_db::getDeck($pt->getTrade_initiator_deck2()));
@@ -135,7 +132,6 @@ if ($controllerChoice=='view_decks_for_trade') {
     
     $incoming_trades = array_unique(trade_card_db::getUserIncomingTrades($user->getID()), SORT_REGULAR);
     foreach($incoming_trades as $it){
-        $userFriend = user_db::getUserByID($it->getTrade_initiator_id());
         if($it->getTrade_initiator_card2()!=null){
             $it->setTrade_initiator_card2(card_db::getPokemonCardById($it->getTrade_initiator_card2()));
             $it->setTrade_initiator_deck2(deck_db::getDeck($it->getTrade_initiator_deck2()));
@@ -148,11 +144,28 @@ if ($controllerChoice=='view_decks_for_trade') {
     
     $incoming_trades = array_unique(trade_card_db::getUserIncomingTrades($user->getID()), SORT_REGULAR);
     foreach($incoming_trades as $it){
-        $userFriend = user_db::getUserByID($it->getTrade_initiator_id());
         if($it->getTrade_initiator_card2()!=null){
             $it->setTrade_initiator_card2(card_db::getPokemonCardById($it->getTrade_initiator_card2()));
             $it->setTrade_initiator_deck2(deck_db::getDeck($it->getTrade_initiator_deck2()));
         }
     }
     require_once 'view_incoming_trades.php';
+}elseif($controllerChoice == 'view_trade_history'){
+    $trade_history = trade_card_db::getUserTradeHistory($user->getID());
+    foreach($trade_history as $t){
+        if($t->getTrade_initiator_card2()!=null){
+            $t->setTrade_initiator_card2(card_db::getPokemonCardById($t->getTrade_initiator_card2()));
+            $t->setTrade_initiator_deck2(deck_db::getDeck($t->getTrade_initiator_deck2()));
+        }
+    }
+    require_once 'view_trade_history.php';
+}elseif($controllerChoice == 'view_trades_admin'){
+    $trade_history = trade_card_db::getTradeHistory();
+    foreach($trade_history as $t){
+        if($t->getTrade_initiator_card2()!=null){
+            $t->setTrade_initiator_card2(card_db::getPokemonCardById($t->getTrade_initiator_card2()));
+            $t->setTrade_initiator_deck2(deck_db::getDeck($t->getTrade_initiator_deck2()));
+        }
+    }
+    require_once 'view_trade_history_admin.php';
 }

@@ -55,11 +55,11 @@ class utility {
     
     public static function removeSingleVariableFromList($mainList, $variableToRemoveFromList) {
         foreach ($mainList as $mL => $val){
-        if($val->getId()==$variableToRemoveFromList){
-            unset($mainList[$mL]);
-        } 
+            if($val->getId()==$variableToRemoveFromList){
+                unset($mainList[$mL]);
+            } 
+        }
         return $mainList;
-        }   
     }
 
     public static function removeListFromList($mainList, $filterList) {
@@ -73,4 +73,31 @@ class utility {
         }
         return$mainList;
     }
+
+    public static function getFormattedStringTradeStatus($tradeStatusID) {
+        $tradeStatusString = "";
+        
+        switch ($tradeStatusID) {
+            case "1":
+                $tradeStatusString = "Purposed";
+
+                break;
+            case "2":
+                $tradeStatusString = "Accepted";
+
+                break;
+            case "3":
+                $tradeStatusString = "Declined";
+
+                break;
+            case "4":
+                $tradeStatusString = "Cancelled";
+
+                break;
+            default:
+                break;
+        }
+        return $tradeStatusString;
+    }
+
 }

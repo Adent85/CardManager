@@ -90,6 +90,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                             <div class="list-group border border-white">
                                 <a href="trade_manager/?controllerRequest=view_purposed_trades" class="list-group-item list-group-item-action text-center">View Purposed Trade Status</a>
                                 <a href="trade_manager/?controllerRequest=view_incoming_trades" class="list-group-item list-group-item-action text-center">View Incoming Trades</a>
+                                <a href="trade_manager/?controllerRequest=view_trade_history" class="list-group-item list-group-item-action text-center">View Trade History</a>
                             </div>
                         </div>
                       </div>
@@ -97,7 +98,7 @@ Copyright Feb 4, 2022 Kyle Fisk
                         <div class="card-footer">
                             <div class="list-group border border-white">
                                 <a href="user_manager/?controllerRequest=view_user_admin" class="list-group-item list-group-item-action text-center">View All Users</a>
-                                <a href="deck_manager/?controllerRequest=view_card_type_admin" class="list-group-item list-group-item-action text-center">View Cards by Deck Type</a>
+                                <a href="trade_manager/?controllerRequest=view_trades_admin" class="list-group-item list-group-item-action text-center">View All Trades</a>
                             </div>
                         </div>
                       </div>

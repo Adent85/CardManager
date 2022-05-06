@@ -64,7 +64,6 @@ if($controllerChoice=='create_deck'){
         $user_decks=deck_db::getUserDecks($user->getID());
         require_once 'deck_list.php';
     }
-    
 }elseif($controllerChoice=='delete_deck'){
     if(utility::getUserRoleIdFromSession() == 2 ){
         $deckID = filter_input(INPUT_POST, 'deck_id');
@@ -134,6 +133,35 @@ if($controllerChoice=='create_deck'){
     $pageNumber = filter_input(INPUT_POST, 'page_number');
     $deckID = filter_input(INPUT_POST, 'deck_id');
     $pokemonCards = card_db::getAllPokemonCards($pageNumber);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}
+elseif ($controllerChoice=='search_cards') {
+    $pageNumber = 1;
+    $search_name = filter_input(INPUT_POST, 'search_name');
+    $pokemonCards = card_db::searchPokemonCardsByName($pageNumber, $search_name);
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}elseif($controllerChoice=='previous_page_search'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+        $search_name = filter_input(INPUT_POST, 'search_name');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::searchPokemonCardsByName($pageNumber, $search_name);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}elseif($controllerChoice=='to_page_search'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+        $search_name = filter_input(INPUT_POST, 'search_name');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::searchPokemonCardsByName($pageNumber, $search_name);
+    $deck=deck_db::getDeck($deckID);
+    require_once 'add_card.php';
+}elseif($controllerChoice=='next_page_search'){
+    $pageNumber = filter_input(INPUT_POST, 'page_number');
+        $search_name = filter_input(INPUT_POST, 'search_name');
+    $deckID = filter_input(INPUT_POST, 'deck_id');
+    $pokemonCards = card_db::searchPokemonCardsByName($pageNumber, $search_name);
     $deck=deck_db::getDeck($deckID);
     require_once 'add_card.php';
 }
