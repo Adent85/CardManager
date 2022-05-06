@@ -14,6 +14,7 @@ Copyright Mar 12, 2022 Kyle Fisk
                         <input type="text" id="search_name" name="search_name" class="form-control bg-white" required/>
                         <label class="form-label" for="search_name">Card Search:</label>
                     </div>
+                    <input type="hidden" name="deck_id" value='<?php echo $deck->getID();?>'>
                     <input type="hidden" name="controllerRequest" value="search_cards">
                     <button type="submit" class="btn btn-primary btn-block">Search</button>
                 </form>

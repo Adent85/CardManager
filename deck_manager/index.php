@@ -116,7 +116,6 @@ if($controllerChoice=='create_deck'){
         $userName= $user->getFirstName()." ".$user->getLastName();
         include 'user_home.php';
     }
-    
 }elseif($controllerChoice=='previous_page'){
     $pageNumber = filter_input(INPUT_POST, 'page_number');
     $deckID = filter_input(INPUT_POST, 'deck_id');
